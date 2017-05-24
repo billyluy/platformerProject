@@ -66,6 +66,7 @@ public class PlayScreen implements Screen {
         map = mapLoader.load("gamemap.tmx");
         renderer = new OrthogonalTiledMapRenderer(map,1/platformerGame.PPM);
         //map starts at bottom left corner
+        //add ppm to the gamecam so the map shows
         gamecam.position.set(port.getWorldWidth() / 2, 32000 - (port.getWorldHeight() / 2), 0);
 //        gamecam.position.set(port.getWorldWidth()/2,port.getWorldHeight()/2,0);
 
