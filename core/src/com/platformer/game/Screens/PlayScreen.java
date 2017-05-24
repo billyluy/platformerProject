@@ -2,6 +2,7 @@ package com.platformer.game.Screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -28,6 +29,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.platformer.game.Scenes.Hud;
+import com.platformer.game.Sprites.Player;
 import com.platformer.game.platformerGame;
 
 /**
@@ -47,6 +49,7 @@ public class PlayScreen implements Screen {
     //box2D(collision and physics)
     private World world;
     private Box2DDebugRenderer b2dr;
+    private Player player;
 
 
     public PlayScreen(platformerGame game) {
@@ -54,33 +57,35 @@ public class PlayScreen implements Screen {
         //cam to follow user through map
         gamecam = new OrthographicCamera();
         //maintain aspect ratio for screens
-        port = new FitViewport(platformerGame.gameWidth, platformerGame.gameHeight, gamecam);
+        port = new FitViewport(platformerGame.gameWidth / platformerGame.PPM, platformerGame.gameHeight/platformerGame.PPM, gamecam);
         //adds a hud
         hud = new Hud(game.batch);
 
         //render map
         mapLoader = new TmxMapLoader();
         map = mapLoader.load("gamemap.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map);
+        renderer = new OrthogonalTiledMapRenderer(map,1/platformerGame.PPM);
+        //map starts at bottom left corner
         gamecam.position.set(port.getWorldWidth() / 2, 32000 - (port.getWorldHeight() / 2), 0);
+//        gamecam.position.set(port.getWorldWidth()/2,port.getWorldHeight()/2,0);
 
         //box2d
-        world = new World(new Vector2(0, 0), true);
         b2dr = new Box2DDebugRenderer();
+        world = new World(new Vector2(0, -10), true);
+        player = new Player(world);
         BodyDef bdef = new BodyDef();
         PolygonShape shape = new PolygonShape();
         FixtureDef fdef = new FixtureDef();
         Body body;
-        //gets certain objects by layer used for collision
 
         //body/fixtures for rectangular object layers
-        for(int i = 0; i < 11; i ++) {
+        for (int i = 0; i < 11; i++) {
             for (MapObject object : map.getLayers().get(i).getObjects().getByType(RectangleMapObject.class)) {
                 Rectangle rect = ((RectangleMapObject) object).getRectangle();
                 bdef.type = BodyDef.BodyType.StaticBody;
-                bdef.position.set(rect.getX() + rect.getWidth() / 2, rect.getY() + rect.getHeight() / 2);
+                bdef.position.set((rect.getX() + rect.getWidth() / 2)/platformerGame.PPM, (rect.getY() + rect.getHeight() / 2)/platformerGame.PPM);
                 body = world.createBody(bdef);
-                shape.setAsBox(rect.getWidth() / 2, rect.getHeight() / 2);
+                shape.setAsBox(rect.getWidth() / 2 / platformerGame.PPM, rect.getHeight() / 2 / platformerGame.PPM);
                 fdef.shape = shape;
                 body.createFixture(fdef);
             }
@@ -108,13 +113,19 @@ public class PlayScreen implements Screen {
 
     public void update(float dt) {
         handleInput(dt);
+        world.step(1 / 60f, 6, 2);
+        gamecam.position.x=player.body.getPosition().x;
         gamecam.update();
         renderer.setView(gamecam);
     }
 
     public void handleInput(float dt) {
-        if (Gdx.input.isTouched())
-            gamecam.position.x += 1000 * dt;
+        if(Gdx.input.isKeyJustPressed(Input.Keys.UP))
+            player.body.applyLinearImpulse(new Vector2(0,8f),player.body.getWorldCenter(),true);
+        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.body.getLinearVelocity().x<=4)
+            player.body.applyLinearImpulse(new Vector2(0.2f,0),player.body.getWorldCenter(),true);
+        if(Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.body.getLinearVelocity().x>=-4)
+            player.body.applyLinearImpulse(new Vector2(-0.2f,0),player.body.getWorldCenter(),true);
     }
 
     @Override
