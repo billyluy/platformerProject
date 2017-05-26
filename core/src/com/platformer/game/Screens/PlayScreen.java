@@ -3,6 +3,7 @@ package com.platformer.game.Screens;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -36,7 +37,7 @@ import com.platformer.game.platformerGame;
  * Created by User on 5/20/2017.
  */
 
-public class PlayScreen implements Screen {
+public class PlayScreen implements Screen{
 
     private platformerGame game;
     private OrthographicCamera gamecam;
@@ -50,6 +51,7 @@ public class PlayScreen implements Screen {
     private World world;
     private Box2DDebugRenderer b2dr;
     private Player player;
+    //shitter fe
 
 
     public PlayScreen(platformerGame game) {
@@ -57,17 +59,16 @@ public class PlayScreen implements Screen {
         //cam to follow user through map
         gamecam = new OrthographicCamera();
         //maintain aspect ratio for screens
-        port = new FitViewport(platformerGame.gameWidth / platformerGame.PPM, platformerGame.gameHeight/platformerGame.PPM, gamecam);
+        port = new FitViewport(platformerGame.gameWidth/platformerGame.PPM, platformerGame.gameHeight/platformerGame.PPM, gamecam);
         //adds a hud
         hud = new Hud(game.batch);
 
         //render map
         mapLoader = new TmxMapLoader();
         map = mapLoader.load("gamemap.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map,1/platformerGame.PPM);
+        renderer = new OrthogonalTiledMapRenderer(map, 1/platformerGame.PPM);
         //map starts at bottom left corner
-        //add ppm to the gamecam so the map shows
-        gamecam.position.set(port.getWorldWidth() / 2, 32000 - (port.getWorldHeight() / 2), 0);
+        gamecam.position.set(((port.getWorldWidth()/2)/platformerGame.PPM)+port.getWorldWidth()/2, (32000 - (port.getWorldHeight() / 2))/platformerGame.PPM - port.getWorldHeight()/2, 0);
 //        gamecam.position.set(port.getWorldWidth()/2,port.getWorldHeight()/2,0);
 
         //box2d
@@ -84,9 +85,9 @@ public class PlayScreen implements Screen {
             for (MapObject object : map.getLayers().get(i).getObjects().getByType(RectangleMapObject.class)) {
                 Rectangle rect = ((RectangleMapObject) object).getRectangle();
                 bdef.type = BodyDef.BodyType.StaticBody;
-                bdef.position.set((rect.getX() + rect.getWidth() / 2)/platformerGame.PPM, (rect.getY() + rect.getHeight() / 2)/platformerGame.PPM);
+                bdef.position.set(((rect.getX() + rect.getWidth() / 2)/platformerGame.PPM), ((rect.getY() + rect.getHeight() / 2)/platformerGame.PPM));
                 body = world.createBody(bdef);
-                shape.setAsBox(rect.getWidth() / 2 / platformerGame.PPM, rect.getHeight() / 2 / platformerGame.PPM);
+                shape.setAsBox(rect.getWidth() / 2/platformerGame.PPM, rect.getHeight() / 2/platformerGame.PPM);
                 fdef.shape = shape;
                 body.createFixture(fdef);
             }
@@ -115,24 +116,26 @@ public class PlayScreen implements Screen {
     public void update(float dt) {
         handleInput(dt);
         world.step(1 / 60f, 6, 2);
-        gamecam.position.x=player.body.getPosition().x;
+        //overrides the gamecam position to follow the player's position
+        gamecam.position.x = player.body.getPosition().x;
+//        gamecam.position.y = player.body.getPosition().y;
         gamecam.update();
         renderer.setView(gamecam);
     }
 
     public void handleInput(float dt) {
-        if(Gdx.input.isKeyJustPressed(Input.Keys.UP))
-            player.body.applyLinearImpulse(new Vector2(0,8f),player.body.getWorldCenter(),true);
-        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.body.getLinearVelocity().x<=4)
-            player.body.applyLinearImpulse(new Vector2(0.2f,0),player.body.getWorldCenter(),true);
-        if(Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.body.getLinearVelocity().x>=-4)
-            player.body.applyLinearImpulse(new Vector2(-0.2f,0),player.body.getWorldCenter(),true);
+        if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
+            player.body.applyLinearImpulse(new Vector2(0, 4f), player.body.getWorldCenter(), true);
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.body.getLinearVelocity().x <= 4)
+            player.body.applyLinearImpulse(new Vector2(0.2f, 0), player.body.getWorldCenter(), true);
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.body.getLinearVelocity().x >= -4)
+            player.body.applyLinearImpulse(new Vector2(-0.2f, 0), player.body.getWorldCenter(), true);
     }
 
     @Override
     public void render(float delta) {
         update(delta);
-        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         renderer.render();
         b2dr.render(world, gamecam.combined);
