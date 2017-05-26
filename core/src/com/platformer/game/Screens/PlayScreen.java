@@ -51,7 +51,6 @@ public class PlayScreen implements Screen{
     private World world;
     private Box2DDebugRenderer b2dr;
     private Player player;
-    //shitter fe
 
 
     public PlayScreen(platformerGame game) {
