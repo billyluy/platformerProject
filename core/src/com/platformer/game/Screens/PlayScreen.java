@@ -100,6 +100,9 @@ public class PlayScreen implements Screen{
             body = world.createBody(bdef);
 
             float vertices[] = ((PolylineMapObject) object).getPolyline().getTransformedVertices();
+            for(int i = 0; i < vertices.length; i ++){
+                vertices[i] /= platformerGame.PPM;
+            }
             ChainShape shape2 = new ChainShape();
             shape2.createChain(vertices);
             fdef.shape = shape2;
