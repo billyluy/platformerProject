@@ -18,6 +18,9 @@ public class WorldContactListener implements ContactListener {
         if(fixA.getUserData() != null && fixA.getUserData().equals("spike")){
             System.out.println("HIT SPIKE");
         }
+        if(fixA.getUserData() != null && fixA.getUserData().equals("disappear")){
+            System.out.println("DISAPPEAR");
+        }
     }
 
     @Override
