@@ -6,14 +6,13 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Polyline;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.ChainShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.platformer.game.Sprites.Ground;
 import com.platformer.game.platformerGame;
 
 /**
@@ -30,16 +29,10 @@ public class B2WorldCreator {
         Body body;
 
         //body/fixtures for rectangular object layers
-        for (int i = 0; i < 3; i++) {
-            for (MapObject object : map.getLayers().get(i).getObjects().getByType(RectangleMapObject.class)) {
-                Rectangle rect = ((RectangleMapObject) object).getRectangle();
-                bdef.type = BodyDef.BodyType.StaticBody;
-                bdef.position.set(((rect.getX() + rect.getWidth() / 2)/ platformerGame.PPM), ((rect.getY() + rect.getHeight() / 2)/platformerGame.PPM));
-                body = world.createBody(bdef);
-                shape.setAsBox(rect.getWidth() / 2/platformerGame.PPM, rect.getHeight() / 2/platformerGame.PPM);
-                fdef.shape = shape;
-                body.createFixture(fdef);
-            }
+        for (MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            new Ground(world,map,rect);
+
         }
 
         //body/fixtures for polyline spikes CANCER AF CANCER AF CANCER AF CANCER AF CANCER AF CANCER AF CANCER AF CANCER AF CANCER AF CANCER AF CANCER AF CANCER AF CANCER AF CANCER AF CANCER AF

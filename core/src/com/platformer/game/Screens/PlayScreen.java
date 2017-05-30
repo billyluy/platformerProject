@@ -31,6 +31,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.platformer.game.Scenes.Hud;
 import com.platformer.game.Sprites.Player;
+import com.platformer.game.Tools.B2WorldCreator;
 import com.platformer.game.platformerGame;
 
 /**
@@ -61,53 +62,18 @@ public class PlayScreen implements Screen{
         port = new FitViewport(platformerGame.gameWidth/platformerGame.PPM, platformerGame.gameHeight/platformerGame.PPM, gamecam);
         //adds a hud
         hud = new Hud(game.batch);
-
         //render map
         mapLoader = new TmxMapLoader();
         map = mapLoader.load("gamemap.tmx");
         renderer = new OrthogonalTiledMapRenderer(map, 1/platformerGame.PPM);
         //map starts at bottom left corner
         gamecam.position.set(((port.getWorldWidth()/2)/platformerGame.PPM)+port.getWorldWidth()/2, (32000 - (port.getWorldHeight() / 2))/platformerGame.PPM - port.getWorldHeight()/2, 0);
-//        gamecam.position.set(port.getWorldWidth()/2,port.getWorldHeight()/2,0);
-
         //box2d
         b2dr = new Box2DDebugRenderer();
         world = new World(new Vector2(0, -10), true);
+        new B2WorldCreator(world,map);
         player = new Player(world);
-        BodyDef bdef = new BodyDef();
-        PolygonShape shape = new PolygonShape();
-        FixtureDef fdef = new FixtureDef();
-        Body body;
 
-        //body/fixtures for rectangular object layers
-        for (int i = 0; i < 11; i++) {
-            for (MapObject object : map.getLayers().get(i).getObjects().getByType(RectangleMapObject.class)) {
-                Rectangle rect = ((RectangleMapObject) object).getRectangle();
-                bdef.type = BodyDef.BodyType.StaticBody;
-                bdef.position.set(((rect.getX() + rect.getWidth() / 2)/platformerGame.PPM), ((rect.getY() + rect.getHeight() / 2)/platformerGame.PPM));
-                body = world.createBody(bdef);
-                shape.setAsBox(rect.getWidth() / 2/platformerGame.PPM, rect.getHeight() / 2/platformerGame.PPM);
-                fdef.shape = shape;
-                body.createFixture(fdef);
-            }
-        }
-
-        //body/fixtures for polyline spikes CANCER AF CANCER AF CANCER AF CANCER AF CANCER AF CANCER AF CANCER AF CANCER AF CANCER AF CANCER AF CANCER AF CANCER AF CANCER AF CANCER AF CANCER AF
-        for (MapObject object : map.getLayers().get(11).getObjects().getByType(PolylineMapObject.class)) {
-            Polyline poly = ((PolylineMapObject) object).getPolyline();
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set(0, 0);
-            body = world.createBody(bdef);
-
-            float vertices[] = ((PolylineMapObject) object).getPolyline().getTransformedVertices();
-            for(int i = 0; i < vertices.length; i ++){
-                vertices[i] /= platformerGame.PPM;
-            }
-            ChainShape shape2 = new ChainShape();
-            shape2.createChain(vertices);
-            fdef.shape = shape2;
-            body.createFixture(fdef);
-        }
     }
 
     @Override
@@ -120,13 +86,12 @@ public class PlayScreen implements Screen{
         world.step(1 / 60f, 6, 2);
         //overrides the gamecam position to follow the player's position
         gamecam.position.x = player.body.getPosition().x;
-//        gamecam.position.y = player.body.getPosition().y;
         gamecam.update();
         renderer.setView(gamecam);
     }
 
     public void handleInput(float dt) {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
+        if (Gdx.input.isKeyJustPressed(Input.Keys.UP) && player.body.getLinearVelocity().y == 0)
             player.body.applyLinearImpulse(new Vector2(0, 4f), player.body.getWorldCenter(), true);
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.body.getLinearVelocity().x <= 4)
             player.body.applyLinearImpulse(new Vector2(0.2f, 0), player.body.getWorldCenter(), true);
@@ -167,6 +132,10 @@ public class PlayScreen implements Screen{
 
     @Override
     public void dispose() {
-
+        map.dispose();
+        renderer.dispose();
+        world.dispose();
+        b2dr.dispose();
+        hud.dispose();
     }
 }

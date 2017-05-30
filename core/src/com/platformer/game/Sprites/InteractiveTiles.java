@@ -11,11 +11,11 @@ import com.badlogic.gdx.physics.box2d.World;
  */
 
 public class InteractiveTiles {
-    private World world;
-    private TiledMap map;
-    private TiledMapTile tile;
-    private Rectangle bounds;
-    private Body body;
+    protected World world;
+    protected TiledMap map;
+    protected TiledMapTile tile;
+    protected Rectangle bounds;
+    protected Body body;
 
     public InteractiveTiles(World world, TiledMap map, Rectangle bounds){
         this.world = world;

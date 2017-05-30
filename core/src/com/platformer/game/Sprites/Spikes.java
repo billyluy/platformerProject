@@ -17,7 +17,5 @@ public class Spikes extends InteractiveTiles {
         BodyDef bdef = new BodyDef();
         FixtureDef fdef = new FixtureDef();
         PolygonShape shape = new PolygonShape();
-
-
     }
 }
