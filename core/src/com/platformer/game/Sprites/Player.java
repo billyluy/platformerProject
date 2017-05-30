@@ -15,10 +15,12 @@ import com.platformer.game.platformerGame;
 public class Player extends Sprite {
     public World world;
     public Body body;
+    public int jump;
 
     public Player(World world){
         this.world = world;
         definePlayer();
+        jump = 12;
     }
 
     public void definePlayer(){

@@ -41,13 +41,4 @@ public class Spikes{
             body.createFixture(fdef);
         }
     }
-
-
-
-
-
-
-
-
-
 }
