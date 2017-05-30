@@ -38,7 +38,7 @@ public class Spikes{
             ChainShape shape2 = new ChainShape();
             shape2.createChain(vertices);
             fdef.shape = shape2;
-            body.createFixture(fdef);
+            body.createFixture(fdef).setUserData("spike");
         }
     }
 }

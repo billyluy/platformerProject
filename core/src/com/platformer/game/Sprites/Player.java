@@ -34,6 +34,7 @@ public class Player extends Sprite {
         CircleShape shape = new CircleShape();
         shape.setRadius(30/platformerGame.PPM);
         fdef.shape = shape;
-        body.createFixture(fdef);
+        body.createFixture(fdef).setUserData("player");
+
     }
 }

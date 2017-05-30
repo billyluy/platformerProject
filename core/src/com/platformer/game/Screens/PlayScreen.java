@@ -32,6 +32,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.platformer.game.Scenes.Hud;
 import com.platformer.game.Sprites.Player;
 import com.platformer.game.Tools.B2WorldCreator;
+import com.platformer.game.Tools.WorldContactListener;
 import com.platformer.game.platformerGame;
 
 /**
@@ -73,7 +74,7 @@ public class PlayScreen implements Screen{
         world = new World(new Vector2(0, -10), true);
         new B2WorldCreator(world,map);
         player = new Player(world);
-
+        world.setContactListener(new WorldContactListener());
     }
 
     @Override
