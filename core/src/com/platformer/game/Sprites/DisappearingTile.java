@@ -28,8 +28,7 @@ public class DisappearingTile  {
             body = world.createBody(bdef);
             shape.setAsBox(rect.getWidth() / 2 / platformerGame.PPM, rect.getHeight() / 2 / platformerGame.PPM);
             fdef.shape = shape;
-            body.createFixture(fdef);
-
+            body.createFixture(fdef).setUserData("disappear");
         }
     }
 }
