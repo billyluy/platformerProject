@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.ChainShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.platformer.game.Sprites.DisappearingTile;
 import com.platformer.game.Sprites.Ground;
 import com.platformer.game.Sprites.Spikes;
 import com.platformer.game.platformerGame;
@@ -26,5 +27,6 @@ public class B2WorldCreator {
         new Ground(world,map);
         //body/fixtures for polyline spikes
         new Spikes(world,map);
+        new DisappearingTile(world,map);
     }
 }
