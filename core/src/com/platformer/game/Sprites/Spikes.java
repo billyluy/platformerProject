@@ -1,5 +1,6 @@
 package com.platformer.game.Sprites;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.PolylineMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -46,7 +47,7 @@ public class Spikes{
             fixture = body.createFixture(fdef);
             fixture.setUserData("spike");
         }
-        setCategoryFilter(platformerGame.GROUND_BIT);
+        setCategoryFilter(platformerGame.SPIKE_BIT);
     }
 
     public void setCategoryFilter(short filterBit){

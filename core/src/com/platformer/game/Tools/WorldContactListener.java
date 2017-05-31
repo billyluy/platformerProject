@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.platformer.game.Sprites.InteractiveTiles;
 
 /**
  * Created by Student 6 on 5/30/2017.
@@ -18,8 +19,12 @@ public class WorldContactListener implements ContactListener {
         if(fixA.getUserData() != null && fixA.getUserData().equals("spike")){
             System.out.println("HIT SPIKE");
         }
-        if(fixA.getUserData() != null && fixA.getUserData().equals("disappear")){
-            System.out.println("DISAPPEAR");
+        if(fixA.getUserData().equals("player") || fixB.getUserData().equals("player")){
+            Fixture player = fixA.getUserData().equals("player") ? fixA:fixB;
+            Fixture object = player.equals(fixA) ? fixB:fixA;
+            if(object.getUserData() instanceof InteractiveTiles){
+                ((InteractiveTiles)object.getUserData()).onTouch();
+            }
         }
     }
 

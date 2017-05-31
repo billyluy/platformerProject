@@ -23,10 +23,19 @@ import com.platformer.game.platformerGame;
 
 public class B2WorldCreator {
     public B2WorldCreator(World world, TiledMap map){
-        //body/fixtures for rectangular object layers
-        new Ground(world,map);
-        //body/fixtures for polyline spikes
+        BodyDef bdef = new BodyDef();
+        FixtureDef fdef  = new FixtureDef();
+        PolygonShape shape = new PolygonShape();
+        Body body;
+        for (MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            new Ground(world,map,rect);
+        }
+        for (MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)) {
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            new DisappearingTile(world,map,rect);
+        }
         new Spikes(world,map);
-        new DisappearingTile(world,map);
+
     }
 }
