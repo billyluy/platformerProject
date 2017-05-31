@@ -9,6 +9,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.ChainShape;
+import com.badlogic.gdx.physics.box2d.Filter;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -19,6 +21,9 @@ import com.platformer.game.platformerGame;
  */
 
 public class Spikes{
+
+    protected Fixture fixture;
+
     public Spikes(World world, TiledMap map){
         BodyDef bdef = new BodyDef();
         FixtureDef fdef = new FixtureDef();
@@ -38,7 +43,15 @@ public class Spikes{
             ChainShape shape2 = new ChainShape();
             shape2.createChain(vertices);
             fdef.shape = shape2;
-            body.createFixture(fdef).setUserData("spike");
+            fixture = body.createFixture(fdef);
+            fixture.setUserData("spike");
         }
+        setCategoryFilter(platformerGame.GROUND_BIT);
+    }
+
+    public void setCategoryFilter(short filterBit){
+        Filter filter = new Filter();
+        filter.categoryBits = filterBit;
+        fixture.setFilterData(filter);
     }
 }

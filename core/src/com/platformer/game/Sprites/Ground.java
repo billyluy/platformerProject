@@ -6,6 +6,8 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Filter;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -16,6 +18,7 @@ import com.platformer.game.platformerGame;
  */
 
 public class Ground{
+    protected Fixture fixture;
     public Ground(World world, TiledMap map){
         BodyDef bdef = new BodyDef();
         FixtureDef fdef  = new FixtureDef();
@@ -28,7 +31,8 @@ public class Ground{
             body = world.createBody(bdef);
             shape.setAsBox(rect.getWidth() / 2 / platformerGame.PPM, rect.getHeight() / 2 / platformerGame.PPM);
             fdef.shape = shape;
-            body.createFixture(fdef).setUserData("ground");
+            fixture = body.createFixture(fdef);
+            fixture.setUserData("ground");
         }
     }
 }
