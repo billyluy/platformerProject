@@ -21,6 +21,7 @@ public class Ground extends InteractiveTiles{
     public Ground(World world, TiledMap map, Rectangle bounds){
         super(world, map, bounds);
         fixture.setUserData(this);
+        setCategoryFilter(platformerGame.GROUND_BIT);
     }
 
     @Override

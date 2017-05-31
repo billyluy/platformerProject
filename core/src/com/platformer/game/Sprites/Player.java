@@ -38,7 +38,8 @@ public class Player extends Sprite {
         shape.setRadius(30/platformerGame.PPM);
 
         fdef.filter.categoryBits = platformerGame.PLAYER_BIT;
-        fdef.filter.maskBits = platformerGame.DEFAULT_BIT | platformerGame.GROUND_BIT | platformerGame.SPIKE_BIT;
+        fdef.filter.maskBits = platformerGame.DEFAULT_BIT | platformerGame.GROUND_BIT | platformerGame.DISAPPERING_BIT| platformerGame.SPIKE_BIT ;
+
 
         fdef.shape = shape;
         fixture = body.createFixture(fdef);

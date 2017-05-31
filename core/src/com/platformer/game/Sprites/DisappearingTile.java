@@ -20,10 +20,12 @@ public class DisappearingTile extends InteractiveTiles{
     public DisappearingTile(World world, TiledMap map, Rectangle bounds){
         super(world, map, bounds);
         fixture.setUserData(this);
+        setCategoryFilter(platformerGame.DISAPPERING_BIT);
     }
 
     @Override
     public void onTouch() {
         Gdx.app.log("Touch", "Disappear");
+        setCategoryFilter(platformerGame.DESTROY_BIT);
     }
 }
