@@ -20,7 +20,8 @@ public class platformerGame extends Game {
 	public static final short GROUND_BIT = 4;
 	public static final short SPIKE_BIT = 8;
 	public static final short DISAPPERING_BIT = 16;
-	public static final short DESTROY_BIT = 32;
+	public static final short COIN_BIT = 32;
+	public static final short DESTROY_BIT = 64;
 
 	
 	@Override

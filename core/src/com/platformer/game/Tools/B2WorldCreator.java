@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.platformer.game.Sprites.Coin;
 import com.platformer.game.Sprites.DisappearingTile;
 import com.platformer.game.Sprites.Ground;
 import com.platformer.game.Sprites.Spikes;
@@ -31,6 +32,11 @@ public class B2WorldCreator {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             new DisappearingTile(world,map,rect);
         }
+        for (MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)) {
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            new Coin(world,map,rect);
+        }
+
         new Spikes(world,map);
 
     }
