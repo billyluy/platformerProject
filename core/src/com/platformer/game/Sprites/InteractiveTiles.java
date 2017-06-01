@@ -53,9 +53,10 @@ public abstract class InteractiveTiles {
     }
 
     public TiledMapTileLayer.Cell getCell(){
-        TiledMapTileLayer layer = (TiledMapTileLayer)map.getLayers().get(1);
-        System.out.println((int)(body.getPosition().x * platformerGame.PPM / 64));
-//        return layer.getCell((int)(body.getPosition().x * platformerGame.PPM / 64), (int)(body.getPosition().y * platformerGame.PPM / 64));
-        return layer.getCell(24,313);
+        TiledMapTileLayer layer = (TiledMapTileLayer)map.getLayers().get(2);
+        System.out.println((float)(body.getPosition().x * platformerGame.PPM / 64));
+        System.out.println((float)(body.getPosition().y * platformerGame.PPM / 64));
+        return layer.getCell((int)(body.getPosition().x * platformerGame.PPM / 64), (int)(body.getPosition().y * platformerGame.PPM / 64));
+//        return layer.getCell(39,488);
     }
 }
