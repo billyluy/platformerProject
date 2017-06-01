@@ -7,6 +7,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.EllipseMapObject;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
@@ -53,9 +54,11 @@ public class PlayScreen implements Screen{
     private World world;
     private Box2DDebugRenderer b2dr;
     private Player player;
+    private TextureAtlas atlas;
 
 
     public PlayScreen(platformerGame game) {
+        atlas = new TextureAtlas("player.pack");
         this.game = game;
         //cam to follow user through map
         gamecam = new OrthographicCamera();
@@ -73,8 +76,12 @@ public class PlayScreen implements Screen{
         b2dr = new Box2DDebugRenderer();
         world = new World(new Vector2(0, -10), true);
         new B2WorldCreator(world,map);
-        player = new Player(world);
+        player = new Player(world, this);
         world.setContactListener(new WorldContactListener());
+    }
+
+    public TextureAtlas getAtlas() {
+        return atlas;
     }
 
     @Override
@@ -84,6 +91,7 @@ public class PlayScreen implements Screen{
 
     public void update(float dt) {
         handleInput(dt);
+        player.update(dt);
         world.step(1 / 60f, 6, 2);
         //overrides the gamecam position to follow the player's position
         gamecam.position.x = player.body.getPosition().x;

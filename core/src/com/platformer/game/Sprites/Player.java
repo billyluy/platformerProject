@@ -1,6 +1,8 @@
 package com.platformer.game.Sprites;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -8,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
+import com.platformer.game.Screens.PlayScreen;
 import com.platformer.game.platformerGame;
 
 /**
@@ -19,11 +22,20 @@ public class Player extends Sprite {
     public Body body;
     public static int jump;
     protected Fixture fixture;
+    private TextureRegion playerStand;
 
-    public Player(World world){
+    public Player(World world, PlayScreen ps){
+        super(ps.getAtlas().findRegion("leftstand1"));
+        playerStand = new TextureRegion(getTexture(), 0, 0, 64, 64);
+        setBounds(0, 0, 64 / platformerGame.PPM, 64 / platformerGame.PPM);
+        setRegion(playerStand);
         this.world = world;
         definePlayer();
         jump = 0;
+    }
+
+    public void update(float dt) {
+        setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
     }
 
     public void definePlayer(){
