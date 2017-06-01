@@ -27,7 +27,6 @@ public class DisappearingTile extends InteractiveTiles{
     public void onTouch() {
         Gdx.app.log("Touch", "Disappear");
         setCategoryFilter(platformerGame.DESTROY_BIT);
-//        getCell().setTile(null);
-        System.out.print(getCell());
+        getCell().setTile(null);
     }
 }
