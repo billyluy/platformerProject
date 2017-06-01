@@ -31,7 +31,7 @@ public class Spikes{
         PolygonShape shape = new PolygonShape();
         Body body;
 
-        for (MapObject object : map.getLayers().get(3).getObjects().getByType(PolylineMapObject.class)) {
+        for (MapObject object : map.getLayers().get(4).getObjects().getByType(PolylineMapObject.class)) {
             Polyline poly = ((PolylineMapObject) object).getPolyline();
             bdef.type = BodyDef.BodyType.StaticBody;
             bdef.position.set(0, 0);

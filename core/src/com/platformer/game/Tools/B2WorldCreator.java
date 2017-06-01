@@ -23,11 +23,11 @@ public class B2WorldCreator {
         FixtureDef fdef  = new FixtureDef();
         PolygonShape shape = new PolygonShape();
         Body body;
-        for (MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
+        for (MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             new Ground(world,map,rect);
         }
-        for (MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)) {
+        for (MapObject object : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             new DisappearingTile(world,map,rect);
         }
