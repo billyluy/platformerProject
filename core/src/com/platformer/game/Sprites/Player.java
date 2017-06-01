@@ -23,7 +23,7 @@ public class Player extends Sprite {
     public Player(World world){
         this.world = world;
         definePlayer();
-        jump = 12;
+        jump = 0;
     }
 
     public void definePlayer(){
@@ -39,7 +39,6 @@ public class Player extends Sprite {
 
         fdef.filter.categoryBits = platformerGame.PLAYER_BIT;
         fdef.filter.maskBits = platformerGame.DEFAULT_BIT | platformerGame.GROUND_BIT | platformerGame.DISAPPERING_BIT| platformerGame.SPIKE_BIT ;
-
 
         fdef.shape = shape;
         fixture = body.createFixture(fdef);

@@ -4,6 +4,7 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -49,5 +50,12 @@ public abstract class InteractiveTiles {
         Filter filter = new Filter();
         filter.categoryBits = filterBit;
         fixture.setFilterData(filter);
+    }
+
+    public TiledMapTileLayer.Cell getCell(){
+        TiledMapTileLayer layer = (TiledMapTileLayer)map.getLayers().get(1);
+        System.out.println((int)(body.getPosition().x * platformerGame.PPM / 64));
+//        return layer.getCell((int)(body.getPosition().x * platformerGame.PPM / 64), (int)(body.getPosition().y * platformerGame.PPM / 64));
+        return layer.getCell(39,14);
     }
 }
