@@ -1,12 +1,10 @@
 package com.platformer.game.Sprites;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
@@ -22,16 +20,23 @@ public class Player extends Sprite {
     public Body body;
     public static int jump;
     protected Fixture fixture;
-    private TextureRegion playerStand;
+    private TextureRegion playerLeftStand1;
+    private TextureRegion playerLeftStand2;
+    private TextureRegion playerRightStand1;
+    private TextureRegion playerRightStand2;
 
     public Player(World world, PlayScreen ps){
         super(ps.getAtlas().findRegion("leftstand1"));
-        playerStand = new TextureRegion(getTexture(), 0, 0, 64, 64);
-        setBounds(0, 0, 64 / platformerGame.PPM, 64 / platformerGame.PPM);
-        setRegion(playerStand);
+        playerLeftStand1 = new TextureRegion(getTexture(), 0, 0, 64, 64);
+        playerLeftStand2 = new TextureRegion(getTexture(), 64, 0, 64, 64);
+        playerRightStand1 = new TextureRegion(getTexture(), 128, 0, 64, 64);
+        playerRightStand2 = new TextureRegion(getTexture(), 192, 0, 64, 64);
+
+        setBounds(0, 0, 80 / platformerGame.PPM, 64 / platformerGame.PPM);
+        setRegion(playerLeftStand1);
         this.world = world;
         definePlayer();
-        jump = 0;
+        jump = 2;
     }
 
     public void update(float dt) {
