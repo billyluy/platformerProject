@@ -1,0 +1,99 @@
+package com.platformer.game.Scenes;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
+import com.platformer.game.platformerGame;
+
+/**
+ * Created by User on 6/3/2017.
+ */
+
+public class Controller {
+    Viewport viewport;
+    Stage stage;
+    boolean leftPress, rightPress;
+    OrthographicCamera cam;
+
+    public Controller(){
+        cam = new OrthographicCamera();
+        viewport = new FitViewport(platformerGame.gameWidth/platformerGame.PPM, platformerGame.gameHeight/platformerGame.PPM, cam);
+        stage = new Stage(viewport, platformerGame.batch);
+        Gdx.input.setInputProcessor(stage);
+
+        Table table = new Table();
+        table.left().bottom();
+
+        Image left = new Image(new Texture("control/left.png"));
+        left.setSize(50,50);
+        left.addListener(new InputListener(){
+
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                leftPress = true;
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                leftPress = false;
+            }
+        });
+
+        Image right = new Image(new Texture("control/right.png"));
+        left.setSize(50,50);
+        left.addListener(new InputListener(){
+
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                rightPress = true;
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                rightPress = false;
+            }
+        });
+
+        table.pack();
+        table.add();
+        table.add();
+        table.add();
+        table.row().pad(5, 5, 5, 5);
+        table.add(left).size(left.getWidth(), left.getHeight());
+        table.add();
+        table.add(right).size(right.getWidth(), right.getHeight());
+        table.row().padBottom(5);
+        table.add();
+        table.add();
+        table.add();
+
+
+        stage.addActor(table);
+
+    }
+
+    public void draw(){
+        stage.draw();
+    }
+
+    public boolean isLeftPressed() {
+        return leftPress;
+    }
+
+    public boolean isRightPressed() {
+        return rightPress;
+    }
+
+    public void resize(int width, int height){
+        viewport.update(width, height);
+    }
+}

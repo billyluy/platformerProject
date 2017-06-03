@@ -30,6 +30,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.platformer.game.Scenes.Controller;
 import com.platformer.game.Scenes.Hud;
 import com.platformer.game.Sprites.Player;
 import com.platformer.game.Tools.B2WorldCreator;
@@ -40,7 +41,7 @@ import com.platformer.game.platformerGame;
  * Created by User on 5/20/2017.
  */
 
-public class PlayScreen implements Screen{
+public class PlayScreen implements Screen {
 
     private platformerGame game;
     private OrthographicCamera gamecam;
@@ -55,6 +56,7 @@ public class PlayScreen implements Screen{
     private Box2DDebugRenderer b2dr;
     private Player player;
     private TextureAtlas atlas;
+    private Controller controller;
 
 
     public PlayScreen(platformerGame game) {
@@ -63,21 +65,22 @@ public class PlayScreen implements Screen{
         //cam to follow user through map
         gamecam = new OrthographicCamera();
         //maintain aspect ratio for screens
-        port = new FitViewport(platformerGame.gameWidth/platformerGame.PPM, platformerGame.gameHeight/platformerGame.PPM, gamecam);
+        port = new FitViewport(platformerGame.gameWidth / platformerGame.PPM, platformerGame.gameHeight / platformerGame.PPM, gamecam);
         //adds a hud
         hud = new Hud(game.batch);
         //render map
         mapLoader = new TmxMapLoader();
         map = mapLoader.load("gamemap.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map, 1/platformerGame.PPM);
+        renderer = new OrthogonalTiledMapRenderer(map, 1 / platformerGame.PPM);
         //map starts at bottom left corner
-        gamecam.position.set(((port.getWorldWidth()/2)/platformerGame.PPM)+port.getWorldWidth()/2, (32000 - (port.getWorldHeight() / 2))/platformerGame.PPM - port.getWorldHeight()/2, 0);
+        gamecam.position.set(((port.getWorldWidth() / 2) / platformerGame.PPM) + port.getWorldWidth() / 2, (32000 - (port.getWorldHeight() / 2)) / platformerGame.PPM - port.getWorldHeight() / 2, 0);
         //box2d
         b2dr = new Box2DDebugRenderer();
         world = new World(new Vector2(0, -10), true);
-        new B2WorldCreator(world,map);
+        new B2WorldCreator(world, map);
         player = new Player(world, this);
         world.setContactListener(new WorldContactListener());
+        controller = new Controller();
     }
 
     public TextureAtlas getAtlas() {
@@ -102,13 +105,18 @@ public class PlayScreen implements Screen{
     }
 
     public void handleInput(float dt) {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.UP) && (player.body.getLinearVelocity().y == 0 || player.jump >0)){
+        if (Gdx.input.isKeyJustPressed(Input.Keys.UP) && (player.body.getLinearVelocity().y == 0 || player.jump > 0)) {
             player.body.applyLinearImpulse(new Vector2(0, 5f), player.body.getWorldCenter(), true);
-            player.jump --;
+            player.jump--;
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.body.getLinearVelocity().x <= 4 )
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.body.getLinearVelocity().x <= 4)
             player.body.applyLinearImpulse(new Vector2(0.2f, 0), player.body.getWorldCenter(), true);
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.body.getLinearVelocity().x >= -4 )
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.body.getLinearVelocity().x >= -4)
+            player.body.applyLinearImpulse(new Vector2(-0.2f, 0), player.body.getWorldCenter(), true);
+
+        if (controller.isRightPressed() && player.body.getLinearVelocity().x <= 4)
+            player.body.applyLinearImpulse(new Vector2(0.2f, 0), player.body.getWorldCenter(), true);
+        if (controller.isLeftPressed() && player.body.getLinearVelocity().x >= -4)
             player.body.applyLinearImpulse(new Vector2(-0.2f, 0), player.body.getWorldCenter(), true);
     }
 
@@ -125,11 +133,13 @@ public class PlayScreen implements Screen{
         game.batch.end();
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
+        controller.draw();
     }
 
     @Override
     public void resize(int width, int height) {
         port.update(width, height);
+        controller.resize(width, height);
     }
 
     @Override
