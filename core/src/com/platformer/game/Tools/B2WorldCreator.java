@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.platformer.game.Screens.PlayScreen;
 import com.platformer.game.Sprites.Coin;
 import com.platformer.game.Sprites.DisappearingTile;
 import com.platformer.game.Sprites.Ground;
@@ -19,22 +20,24 @@ import com.platformer.game.Sprites.Spikes;
  */
 
 public class B2WorldCreator {
-    public B2WorldCreator(World world, TiledMap map){
+    public B2WorldCreator(PlayScreen screen){
+        World world = screen.getWorld();
+        TiledMap map = screen.getMap();
         BodyDef bdef = new BodyDef();
         FixtureDef fdef  = new FixtureDef();
         PolygonShape shape = new PolygonShape();
         Body body;
         for (MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            new Ground(world,map,rect);
+            new Ground(screen,rect);
         }
         for (MapObject object : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            new DisappearingTile(world,map,rect);
+            new DisappearingTile(screen,rect);
         }
         for (MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            new Coin(world,map,rect);
+            new Coin(screen,rect);
         }
 
         new Spikes(world,map);

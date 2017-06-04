@@ -22,7 +22,7 @@ public class Player extends Sprite {
     public Body body;
     public static int jump;
     protected Fixture fixture;
-    private enum State {FALLING, JUMPING, STANDING, RUNNING};
+    private enum State {FALLING, JUMPING, STANDING, RUNNING, DEAD};
     public State currentState;
     public State previousState;
     private Animation<TextureRegion> playerRUN;
@@ -30,8 +30,9 @@ public class Player extends Sprite {
     private Animation<TextureRegion> playerSTAND;
     private float stateTimer;
     private boolean runningRight;
+    private boolean isDead;
 
-    public Player(World world, PlayScreen ps){
+    public Player(PlayScreen ps){
         super(ps.getAtlas().findRegion("run1"));
         currentState = State.STANDING;
         previousState = State.STANDING;
@@ -50,9 +51,9 @@ public class Player extends Sprite {
 
 
         setBounds(0, 0, 64 / platformerGame.PPM, 64 / platformerGame.PPM);
-        this.world = world;
+        this.world = ps.getWorld();
         definePlayer();
-        jump = 2;
+        jump = 0;
     }
 
     public void update(float dt) {
@@ -65,6 +66,9 @@ public class Player extends Sprite {
 
         TextureRegion region;
         switch(currentState){
+            /*
+            add a dead region
+             */
             case JUMPING:
                 region = new TextureRegion(getTexture(), 64, 0, 64, 64);
                 break;
@@ -92,7 +96,9 @@ public class Player extends Sprite {
     }
 
     public State getState() {
-        if(body.getLinearVelocity().y > 0)
+        if(isDead)
+            return State.DEAD;
+        else if(body.getLinearVelocity().y > 0)
             return State.JUMPING;
         else if(body.getLinearVelocity().y < 0)
             return State.FALLING;
@@ -113,12 +119,15 @@ public class Player extends Sprite {
         shape.setRadius(30/platformerGame.PPM);
 
         fdef.filter.categoryBits = platformerGame.PLAYER_BIT;
-        fdef.filter.maskBits = platformerGame.DEFAULT_BIT | platformerGame.GROUND_BIT | platformerGame.SPIKE_BIT | platformerGame.DISAPPERING_BIT | platformerGame.COIN_BIT;
+        fdef.filter.maskBits = platformerGame.GROUND_BIT | platformerGame.SPIKE_BIT | platformerGame.DISAPPERING_BIT | platformerGame.COIN_BIT;
 
         fdef.shape = shape;
         fixture = body.createFixture(fdef);
         fixture.setUserData("player");
     }
 
+    public void hit(){
+        isDead = true;
 
+    }
 }

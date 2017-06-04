@@ -1,37 +1,24 @@
 package com.platformer.game.Screens;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.objects.EllipseMapObject;
-import com.badlogic.gdx.maps.objects.PolygonMapObject;
-import com.badlogic.gdx.maps.objects.PolylineMapObject;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Polyline;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.ChainShape;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.platformer.game.Scenes.Controller;
 import com.platformer.game.Scenes.Hud;
+import com.platformer.game.Sprites.DownSpike;
+import com.platformer.game.Sprites.MoveSpike;
+import com.platformer.game.Sprites.MoveSpikeTest;
 import com.platformer.game.Sprites.Player;
 import com.platformer.game.Tools.B2WorldCreator;
 import com.platformer.game.Tools.WorldContactListener;
@@ -55,6 +42,8 @@ public class PlayScreen implements Screen {
     private World world;
     private Box2DDebugRenderer b2dr;
     private Player player;
+    private DownSpike downSpike;
+    private MoveSpikeTest moveSpikeTest;
     private TextureAtlas atlas;
     private Controller controller;
 
@@ -77,8 +66,9 @@ public class PlayScreen implements Screen {
         //box2d
         b2dr = new Box2DDebugRenderer();
         world = new World(new Vector2(0, -10), true);
-        new B2WorldCreator(world, map);
-        player = new Player(world, this);
+        new B2WorldCreator(this);
+        player = new Player(this);
+        moveSpikeTest = new MoveSpikeTest(world);
         world.setContactListener(new WorldContactListener());
         controller = new Controller();
     }
@@ -95,6 +85,7 @@ public class PlayScreen implements Screen {
     public void update(float dt) {
         handleInput(dt);
         player.update(dt);
+        moveSpikeTest.update(dt);
         world.step(1 / 60f, 6, 2);
         //overrides the gamecam position to follow the player's position
         gamecam.position.x = player.body.getPosition().x;
@@ -105,7 +96,7 @@ public class PlayScreen implements Screen {
     public void handleInput(float dt) {
         if (Gdx.input.isKeyJustPressed(Input.Keys.UP) && (player.body.getLinearVelocity().y == 0 || player.jump > 0)) {
             player.body.applyLinearImpulse(new Vector2(0, 5f), player.body.getWorldCenter(), true);
-            player.jump--;
+            player.jump=0;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.body.getLinearVelocity().x <= 4)
             player.body.applyLinearImpulse(new Vector2(0.2f, 0), player.body.getWorldCenter(), true);
@@ -128,6 +119,7 @@ public class PlayScreen implements Screen {
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();
         player.draw(game.batch);
+        moveSpikeTest.draw(game.batch);
         game.batch.end();
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
@@ -153,6 +145,14 @@ public class PlayScreen implements Screen {
     @Override
     public void hide() {
 
+    }
+
+    public TiledMap getMap(){
+        return map;
+    }
+
+    public World getWorld(){
+        return world;
     }
 
     @Override

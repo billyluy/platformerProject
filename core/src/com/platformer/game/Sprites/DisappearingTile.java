@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.platformer.game.Screens.PlayScreen;
 import com.platformer.game.platformerGame;
 
 /**
@@ -17,8 +18,8 @@ import com.platformer.game.platformerGame;
  */
 
 public class DisappearingTile extends InteractiveTiles{
-    public DisappearingTile(World world, TiledMap map, Rectangle bounds){
-        super(world, map, bounds);
+    public DisappearingTile(PlayScreen screen, Rectangle bounds){
+        super(screen, bounds);
         fixture.setUserData(this);
         setCategoryFilter(platformerGame.DISAPPERING_BIT);
     }
