@@ -24,7 +24,7 @@ public class Controller {
 
     public Controller(){
         cam = new OrthographicCamera();
-        viewport = new FitViewport(platformerGame.gameWidth/platformerGame.PPM, platformerGame.gameHeight/platformerGame.PPM, cam);
+        viewport = new FitViewport(platformerGame.gameWidth, platformerGame.gameHeight, cam);
         stage = new Stage(viewport, platformerGame.batch);
         Gdx.input.setInputProcessor(stage);
 
@@ -48,8 +48,8 @@ public class Controller {
         });
 
         Image right = new Image(new Texture("control/right.png"));
-        left.setSize(50,50);
-        left.addListener(new InputListener(){
+        right.setSize(50,50);
+        right.addListener(new InputListener(){
 
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -63,18 +63,11 @@ public class Controller {
             }
         });
 
-        table.pack();
-        table.add();
-        table.add();
-        table.add();
-        table.row().pad(5, 5, 5, 5);
+//        table.pack();
         table.add(left).size(left.getWidth(), left.getHeight());
         table.add();
         table.add(right).size(right.getWidth(), right.getHeight());
-        table.row().padBottom(5);
-        table.add();
-        table.add();
-        table.add();
+        table.pad(30,30,30,30);
 
 
         stage.addActor(table);

@@ -87,7 +87,6 @@ public class PlayScreen implements Screen {
         return atlas;
     }
 
-
     @Override
     public void show() {
 
@@ -99,7 +98,6 @@ public class PlayScreen implements Screen {
         world.step(1 / 60f, 6, 2);
         //overrides the gamecam position to follow the player's position
         gamecam.position.x = player.body.getPosition().x;
-//        System.out.println(player.body.getPosition().x + ", "+ player.body.getPosition().y);
         gamecam.update();
         renderer.setView(gamecam);
     }
