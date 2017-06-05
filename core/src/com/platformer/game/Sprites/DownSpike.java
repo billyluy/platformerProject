@@ -14,7 +14,7 @@ import com.platformer.game.platformerGame;
  */
 
 public class DownSpike extends MoveSpike {
-    public DownSpike(PlayScreen screen, float x, float y) {
+    public DownSpike(PlayScreen screen,float x, float y) {
         super(screen, x, y);
 //        Image image = new Image(new Texture("sprites cancer\\spike down.png"));
         setBounds(getX(),getY(),64/platformerGame.PPM,64/platformerGame.PPM);
@@ -27,7 +27,7 @@ public class DownSpike extends MoveSpike {
     @Override
     protected void defineMoveSpike() {
         BodyDef bdef = new BodyDef();
-        bdef.position.set(128/ platformerGame.PPM,31164/platformerGame.PPM);
+        bdef.position.set(getX(),getY());
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body= world.createBody(bdef);
 
@@ -39,6 +39,10 @@ public class DownSpike extends MoveSpike {
         fdef.filter.maskBits = platformerGame.GROUND_BIT | platformerGame.PLAYER_BIT ;
 
         fdef.shape = shape;
-        b2body.createFixture(fdef);
+        fixture = b2body.createFixture(fdef);
+        fixture.setUserData("downSpike");
+
+        System.out.println(getX());
+        System.out.println(getY());
     }
 }

@@ -30,7 +30,7 @@ public class Hud implements Disposable{
         table.top();
         table.setFillParent(true);
 
-        worldLabel = new Label("1-1",new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        worldLabel = new Label("1-1",new Label.LabelStyle(new BitmapFont(), Color.BLACK));
         table.add(worldLabel).expandX().padTop(10);
 
         stage.addActor(table);

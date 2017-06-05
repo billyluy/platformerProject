@@ -32,7 +32,7 @@ public class Controller {
         table.left().bottom();
 
         Image left = new Image(new Texture("control/left.png"));
-        left.setSize(50,50);
+        left.setSize(100,100);
         left.addListener(new InputListener(){
 
             @Override
@@ -48,7 +48,7 @@ public class Controller {
         });
 
         Image right = new Image(new Texture("control/right.png"));
-        right.setSize(50,50);
+        right.setSize(100,100);
         right.addListener(new InputListener(){
 
             @Override
@@ -65,7 +65,7 @@ public class Controller {
 
 //        table.pack();
         table.add(left).size(left.getWidth(), left.getHeight());
-        table.add();
+        table.add().pad(30,30,30,30);
         table.add(right).size(right.getWidth(), right.getHeight());
         table.pad(30,30,30,30);
 

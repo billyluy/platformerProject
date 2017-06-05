@@ -17,8 +17,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.platformer.game.Scenes.Controller;
 import com.platformer.game.Scenes.Hud;
 import com.platformer.game.Sprites.DownSpike;
-import com.platformer.game.Sprites.MoveSpike;
-import com.platformer.game.Sprites.MoveSpikeTest;
 import com.platformer.game.Sprites.Player;
 import com.platformer.game.Tools.B2WorldCreator;
 import com.platformer.game.Tools.WorldContactListener;
@@ -43,7 +41,6 @@ public class PlayScreen implements Screen {
     private Box2DDebugRenderer b2dr;
     private Player player;
     private DownSpike downSpike;
-    private MoveSpikeTest moveSpikeTest;
     private TextureAtlas atlas;
     private Controller controller;
 
@@ -68,7 +65,7 @@ public class PlayScreen implements Screen {
         world = new World(new Vector2(0, -10), true);
         new B2WorldCreator(this);
         player = new Player(this);
-        moveSpikeTest = new MoveSpikeTest(world);
+        downSpike = new DownSpike(this,128/platformerGame.PPM,31164/platformerGame.PPM);
         world.setContactListener(new WorldContactListener());
         controller = new Controller();
     }
@@ -85,7 +82,7 @@ public class PlayScreen implements Screen {
     public void update(float dt) {
         handleInput(dt);
         player.update(dt);
-        moveSpikeTest.update(dt);
+        downSpike.update(dt);
         world.step(1 / 60f, 6, 2);
         //overrides the gamecam position to follow the player's position
         gamecam.position.x = player.body.getPosition().x;
@@ -119,7 +116,6 @@ public class PlayScreen implements Screen {
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();
         player.draw(game.batch);
-        moveSpikeTest.draw(game.batch);
         game.batch.end();
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
