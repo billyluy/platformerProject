@@ -20,10 +20,10 @@ import com.platformer.game.platformerGame;
 
 public class Ground extends InteractiveTiles{
     public Ground(PlayScreen screen, Rectangle bounds){
-        super(screen, bounds);
-        fixture.setUserData(this);
-        setCategoryFilter(platformerGame.GROUND_BIT);
-    }
+    super(screen, bounds);
+    fixture.setUserData(this);
+    setCategoryFilter(platformerGame.GROUND_BIT);
+}
 
     @Override
     public void onTouch() {
