@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -58,7 +59,7 @@ public class Player extends Sprite {
         }
         playerDEAD = new Animation<TextureRegion>(0.05f, frames);
         frames.clear();
-        setBounds(0, 0, 333 / platformerGame.PPM, 333 / platformerGame.PPM);
+        setBounds(0, 0, 64 / platformerGame.PPM, 64 / platformerGame.PPM);
         this.world = ps.getWorld();
         definePlayer();
         jump = 0;
@@ -67,6 +68,9 @@ public class Player extends Sprite {
     public void setDead(boolean b) {
         isDead = b;
     }
+
+    public boolean getIsDead() { return isDead; }
+
     public void update(float dt) {
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
         setRegion(getFrame(dt));
@@ -78,7 +82,10 @@ public class Player extends Sprite {
         TextureRegion region;
         switch(currentState){
             case DEAD:
-                region = playerDEAD.getKeyFrame(stateTimer, true);
+                region = playerDEAD.getKeyFrame(stateTimer, false);
+                setSize(333 / platformerGame.PPM, 333 / platformerGame.PPM);
+                world.setGravity(new Vector2(0, 0));
+                this.body.setLinearVelocity(0, 0);
                 break;
             case JUMPING:
                 region = new TextureRegion(getTexture(), 64, 0, 64, 64);
