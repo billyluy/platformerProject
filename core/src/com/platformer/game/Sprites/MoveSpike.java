@@ -2,6 +2,7 @@ package com.platformer.game.Sprites;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -20,11 +21,14 @@ public abstract class MoveSpike extends Sprite{
     protected PlayScreen screen;
     public Body b2body;
     protected Fixture fixture;
+    public Vector2 velocity;
 
     public MoveSpike(PlayScreen screen, float x, float y){
         this.world = screen.getWorld();
+        this.screen = screen;
         setPosition(x,y);
         defineMoveSpike();
+        velocity = new Vector2(0,5);
     }
 
     protected abstract void defineMoveSpike();

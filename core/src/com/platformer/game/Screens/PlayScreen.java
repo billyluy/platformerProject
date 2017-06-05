@@ -65,17 +65,13 @@ public class PlayScreen implements Screen {
         world = new World(new Vector2(0, -10), true);
         new B2WorldCreator(this);
         player = new Player(this);
-        downSpike = new DownSpike(this,128/platformerGame.PPM,31164/platformerGame.PPM);
-        world.setContactListener(new WorldContactListener(player));
+        downSpike = new DownSpike(this,128/platformerGame.PPM,31800/platformerGame.PPM);
+        world.setContactListener(new WorldContactListener());
         controller = new Controller();
     }
 
     public TextureAtlas getAtlas() {
         return atlas;
-    }
-
-    public void createAtlas(TextureAtlas ta) {
-        atlas = ta;
     }
 
     @Override

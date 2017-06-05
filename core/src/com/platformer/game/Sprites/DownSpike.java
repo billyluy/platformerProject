@@ -21,6 +21,7 @@ public class DownSpike extends MoveSpike {
     }
 
     public void update(float dt){
+        b2body.setLinearVelocity(velocity);
         setPosition(b2body.getPosition().x-getWidth()/2,b2body.getPosition().y-getHeight()/2);
     }
 
@@ -36,7 +37,7 @@ public class DownSpike extends MoveSpike {
         shape.setRadius(30/platformerGame.PPM);
 
         fdef.filter.categoryBits = platformerGame.MOVESPIKE_BIT;
-        fdef.filter.maskBits = platformerGame.GROUND_BIT | platformerGame.PLAYER_BIT ;
+        fdef.filter.maskBits = platformerGame.GROUND_BIT | platformerGame.PLAYER_BIT;
 
         fdef.shape = shape;
         fixture = b2body.createFixture(fdef);
