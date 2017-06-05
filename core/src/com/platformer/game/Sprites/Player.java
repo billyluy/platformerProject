@@ -2,6 +2,7 @@ package com.platformer.game.Sprites;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -26,14 +27,16 @@ public class Player extends Sprite {
     public State currentState;
     public State previousState;
     private Animation<TextureRegion> playerRUN;
-    private Animation<TextureRegion> playerJUMP;
     private Animation<TextureRegion> playerSTAND;
+    private Animation<TextureRegion> playerDEAD;
     private float stateTimer;
     private boolean runningRight;
+    Sprite bloodSprite;
     private boolean isDead;
 
     public Player(PlayScreen ps){
         super(ps.getAtlas().findRegion("run1"));
+        bloodSprite = new Sprite(new TextureAtlas("blood.pack").findRegion("bloods"));
         currentState = State.STANDING;
         previousState = State.STANDING;
         stateTimer = 0;
@@ -48,14 +51,22 @@ public class Player extends Sprite {
             frames.add(new TextureRegion(getTexture(), i * 64, 0, 64, 64));
         playerSTAND = new Animation<TextureRegion>(0.2f, frames);
         frames.clear();
-
-
-        setBounds(0, 0, 64 / platformerGame.PPM, 64 / platformerGame.PPM);
+        for(int i = 0; i < 3; i ++) {
+            for(int j = 0; j < 3; j ++) {
+                frames.add(new TextureRegion(bloodSprite.getTexture(), j * 333, i * 333, 333, 333));
+            }
+        }
+        playerDEAD = new Animation<TextureRegion>(0.05f, frames);
+        frames.clear();
+        setBounds(0, 0, 333 / platformerGame.PPM, 333 / platformerGame.PPM);
         this.world = ps.getWorld();
         definePlayer();
         jump = 0;
     }
 
+    public void setDead(boolean b) {
+        isDead = b;
+    }
     public void update(float dt) {
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
         setRegion(getFrame(dt));
@@ -66,9 +77,9 @@ public class Player extends Sprite {
 
         TextureRegion region;
         switch(currentState){
-            /*
-            add a dead region
-             */
+            case DEAD:
+                region = playerDEAD.getKeyFrame(stateTimer, true);
+                break;
             case JUMPING:
                 region = new TextureRegion(getTexture(), 64, 0, 64, 64);
                 break;

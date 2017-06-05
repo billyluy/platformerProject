@@ -6,17 +6,25 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.platformer.game.Sprites.InteractiveTiles;
+import com.platformer.game.Sprites.Player;
 
 /**
  * Created by Student 6 on 5/30/2017.
  */
 
 public class WorldContactListener implements ContactListener {
+    private Player player;
+
+    public WorldContactListener(Player player) {
+        this.player = player;
+    }
+
     @Override
     public void beginContact(Contact contact) {
         Fixture fixA = contact.getFixtureA();
         Fixture fixB = contact.getFixtureB();
         if(fixA.getUserData() != null && fixA.getUserData().equals("spike")){
+            player.setDead(true);
             System.out.println("HIT SPIKE");
         }
         if(fixA.getUserData().equals("player") || fixB.getUserData().equals("player")){

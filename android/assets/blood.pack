@@ -1,0 +1,12 @@
+
+blood.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+bloods
+  rotate: false
+  xy: 0, 0
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
