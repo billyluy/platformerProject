@@ -34,6 +34,8 @@ public class Player extends Sprite {
     private boolean runningRight;
     Sprite bloodSprite;
     private boolean isDead;
+    public static float playerX;
+    public float playerY;
 
     public Player(PlayScreen ps){
         super(ps.getAtlas().findRegion("run1"));
@@ -63,6 +65,9 @@ public class Player extends Sprite {
         this.world = ps.getWorld();
         definePlayer();
         jump = 0;
+        playerX = getX();
+        playerY = getY();
+
     }
 
     public void setDead(boolean b) {
@@ -72,6 +77,8 @@ public class Player extends Sprite {
     public boolean getIsDead() { return isDead; }
 
     public void update(float dt) {
+        playerX = getX();
+        playerY = getY();
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
         setRegion(getFrame(dt));
     }
@@ -146,6 +153,13 @@ public class Player extends Sprite {
 
     public void hit(){
         isDead = true;
+    }
 
+    public static float getPlayerX(){
+        return playerX;
+    }
+
+    public float getPlayerY(){
+        return playerY;
     }
 }

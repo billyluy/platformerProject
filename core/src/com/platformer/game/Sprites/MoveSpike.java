@@ -28,7 +28,7 @@ public abstract class MoveSpike extends Sprite{
         this.screen = screen;
         setPosition(x,y);
         defineMoveSpike();
-        velocity = new Vector2(0,5);
+        velocity = new Vector2(0,-3);
     }
 
     protected abstract void defineMoveSpike();

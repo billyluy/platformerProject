@@ -21,8 +21,11 @@ public class DownSpike extends MoveSpike {
     }
 
     public void update(float dt){
-        b2body.setLinearVelocity(velocity);
         setPosition(b2body.getPosition().x-getWidth()/2,b2body.getPosition().y-getHeight()/2);
+        if(getX() == Player.getPlayerX()){
+//            System.out.println("same pos");
+            b2body.setLinearVelocity(velocity);
+        }
     }
 
     @Override
@@ -31,6 +34,7 @@ public class DownSpike extends MoveSpike {
         bdef.position.set(getX(),getY());
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body= world.createBody(bdef);
+        b2body.setGravityScale(0);
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
