@@ -66,7 +66,7 @@ public class PlayScreen implements Screen {
         new B2WorldCreator(this);
         player = new Player(this);
         downSpike = new DownSpike(this,128/platformerGame.PPM,31800/platformerGame.PPM);
-        world.setContactListener(new WorldContactListener());
+        world.setContactListener(new WorldContactListener(player));
         controller = new Controller();
     }
 
