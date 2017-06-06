@@ -53,10 +53,7 @@ public class DownSpike extends MoveSpike {
 
         fdef.shape = shape;
         fixture = b2body.createFixture(fdef);
-        fixture.setUserData("downSpike");
-
-        System.out.println(getX());
-        System.out.println(getY());
+        fixture.setUserData(this);
     }
 
     @Override
