@@ -1,6 +1,9 @@
 package com.platformer.game.Sprites;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -14,14 +17,18 @@ import com.platformer.game.platformerGame;
  */
 
 public class DownSpike extends MoveSpike {
+
     private boolean destroyMe;
     private boolean destroyed;
+    private Sprite spikes;
+
     public DownSpike(PlayScreen screen,float x, float y) {
         super(screen, x, y);
 //        Image image = new Image(new Texture("sprites cancer\\spike down.png"));
         setBounds(getX(),getY(),64/platformerGame.PPM,64/platformerGame.PPM);
         destroyMe = false;
         destroyed = false;
+        spikes = new Sprite(new TextureAtlas("spikes.pack").findRegion("spike down"));
     }
 
     public void update(float dt){
@@ -34,6 +41,8 @@ public class DownSpike extends MoveSpike {
                 b2body.setLinearVelocity(velocity);
             }
         }
+        setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
+        setRegion(new TextureRegion());
     }
 
     @Override
