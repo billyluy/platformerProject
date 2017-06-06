@@ -22,8 +22,7 @@ public class DownSpike extends MoveSpike {
 
     public void update(float dt){
         setPosition(b2body.getPosition().x-getWidth()/2,b2body.getPosition().y-getHeight()/2);
-        if(getX() == Player.getPlayerX()){
-//            System.out.println("same pos");
+        if(getX()+getWidth()/2 >= Player.getPlayerX() &&  getX()-getWidth()/2 <= Player.getPlayerX()){
             b2body.setLinearVelocity(velocity);
         }
     }

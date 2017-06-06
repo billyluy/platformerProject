@@ -21,9 +21,13 @@ public class WorldContactListener implements ContactListener {
 
     @Override
     public void beginContact(Contact contact) {
-        Fixture fixA = contact.getFixtureA();
-        Fixture fixB = contact.getFixtureB();
+        Fixture fixA = contact.getFixtureA();//moving
+        Fixture fixB = contact.getFixtureB();//getting collided
         if(fixA.getUserData() != null && fixA.getUserData().equals("spike")){
+            player.setDead(true);
+            System.out.println("HIT SPIKE");
+        }
+        if(fixB.getUserData() != null && fixB.getUserData().equals("downSpike") && fixA.getUserData().equals("player")){
             player.setDead(true);
             System.out.println("HIT SPIKE");
         }
@@ -32,6 +36,10 @@ public class WorldContactListener implements ContactListener {
             Fixture object = player.equals(fixA) ? fixB:fixA;
             if(object.getUserData() instanceof InteractiveTiles){
                 ((InteractiveTiles)object.getUserData()).onTouch();
+            }
+            if(object.getUserData().equals("downSpike")) {
+                this.player.setDead(true);
+                System.out.println("HIT SPIKE");
             }
         }
     }
