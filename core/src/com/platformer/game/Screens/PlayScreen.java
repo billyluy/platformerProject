@@ -47,7 +47,7 @@ public class PlayScreen implements Screen {
     private Controller controller;
 
 
-    public PlayScreen(platformerGame game) {
+    public PlayScreen(platformerGame game, float x, float y) {
         atlas = new TextureAtlas("player.pack");
         this.game = game;
         //cam to follow user through map
@@ -66,7 +66,7 @@ public class PlayScreen implements Screen {
         b2dr = new Box2DDebugRenderer();
         world = new World(new Vector2(0, -10), true);
         new B2WorldCreator(this);
-        player = new Player(this);
+        player = new Player(this, x, y);
         downSpikes = new ArrayList<DownSpike>();
         downSpikes.add(new DownSpike(this,200/platformerGame.PPM,31800/platformerGame.PPM));
         downSpikes.add(new DownSpike(this, 280/platformerGame.PPM, 31800/platformerGame.PPM));

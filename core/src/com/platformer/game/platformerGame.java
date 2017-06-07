@@ -23,11 +23,15 @@ public class platformerGame extends Game {
 	public static final short COIN_BIT = 32;
 	public static final short MOVESPIKE_BIT = 64;
 
+	public float initialX;
+	public float initialY;
 	
 	@Override
 	public void create () {
+		initialX = 128/platformerGame.PPM;
+		initialY = 31164/platformerGame.PPM;
 		batch = new SpriteBatch();
-		setScreen(new PlayScreen(this));
+		setScreen(new PlayScreen(this, initialX, initialY));
 	}
 
 	@Override

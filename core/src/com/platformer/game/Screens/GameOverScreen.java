@@ -53,7 +53,8 @@ public class GameOverScreen implements Screen {
     @Override
     public void render(float delta) {
         if(Gdx.input.justTouched()) {
-            game.setScreen(new PlayScreen((platformerGame) game));
+            //later replace with save button coordinates
+            game.setScreen(new PlayScreen((platformerGame) game, 300/platformerGame.PPM, 31164/platformerGame.PPM));
             dispose();
         }
         Gdx.gl.glClearColor(0, 0, 0, 1);

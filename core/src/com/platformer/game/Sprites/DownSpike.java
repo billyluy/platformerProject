@@ -70,4 +70,6 @@ public class DownSpike extends MoveSpike {
     public void destroySpike() {
         this.destroyMe = true;
     }
+
+    public boolean getDestroyed() { return destroyed; }
 }

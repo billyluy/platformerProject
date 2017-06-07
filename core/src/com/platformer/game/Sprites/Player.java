@@ -37,9 +37,11 @@ public class Player extends Sprite {
     public static float playerX;
     public float playerY;
 
-    public Player(PlayScreen ps){
+    public Player(PlayScreen ps, float x, float y){
         super(ps.getAtlas().findRegion("run1"));
         bloodSprite = new Sprite(new TextureAtlas("blood.pack").findRegion("bloods"));
+        playerX = x;
+        playerY = y;
         currentState = State.STANDING;
         previousState = State.STANDING;
         stateTimer = 0;
@@ -65,8 +67,6 @@ public class Player extends Sprite {
         this.world = ps.getWorld();
         definePlayer();
         jump = 0;
-        playerX = getX();
-        playerY = getY();
 
     }
 
@@ -129,7 +129,7 @@ public class Player extends Sprite {
     public void definePlayer(){
         BodyDef bdef = new BodyDef();
         //position is based on the entire map
-        bdef.position.set(128/platformerGame.PPM,31164/platformerGame.PPM);
+        bdef.position.set(playerX, playerY);
         bdef.type = BodyDef.BodyType.DynamicBody;
         body = world.createBody(bdef);
 
