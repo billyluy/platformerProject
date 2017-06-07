@@ -42,7 +42,7 @@ public class DownSpike extends MoveSpike {
             }
         }
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
-        setRegion(new TextureRegion());
+        setRegion(new TextureRegion(spikes.getTexture(), 0, 0, 64, 64));
     }
 
     @Override

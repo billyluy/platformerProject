@@ -88,7 +88,6 @@ public class PlayScreen implements Screen {
         player.update(dt);
         updateSpikes(dt);
         world.step(1 / 60f, 6, 2);
-        //overrides the gamecam position to follow the player's position
         gamecam.position.x = player.body.getPosition().x;
         gamecam.update();
         renderer.setView(gamecam);
