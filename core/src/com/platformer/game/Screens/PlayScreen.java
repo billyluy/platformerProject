@@ -22,6 +22,8 @@ import com.platformer.game.Tools.B2WorldCreator;
 import com.platformer.game.Tools.WorldContactListener;
 import com.platformer.game.platformerGame;
 
+import java.util.ArrayList;
+
 /**
  * Created by User on 5/20/2017.
  */
@@ -40,7 +42,7 @@ public class PlayScreen implements Screen {
     private World world;
     private Box2DDebugRenderer b2dr;
     private Player player;
-    private DownSpike downSpike;
+    private ArrayList<DownSpike> downSpikes;
     private TextureAtlas atlas;
     private Controller controller;
 
@@ -65,7 +67,9 @@ public class PlayScreen implements Screen {
         world = new World(new Vector2(0, -10), true);
         new B2WorldCreator(this);
         player = new Player(this);
-        downSpike = new DownSpike(this,200/platformerGame.PPM,31800/platformerGame.PPM);
+        downSpikes = new ArrayList<DownSpike>();
+        downSpikes.add(new DownSpike(this,200/platformerGame.PPM,31800/platformerGame.PPM));
+        downSpikes.add(new DownSpike(this, 280/platformerGame.PPM, 31800/platformerGame.PPM));
         world.setContactListener(new WorldContactListener(player));
         controller = new Controller();
     }
@@ -82,7 +86,7 @@ public class PlayScreen implements Screen {
     public void update(float dt) {
         handleInput(dt);
         player.update(dt);
-        downSpike.update(dt);
+        updateSpikes(dt);
         world.step(1 / 60f, 6, 2);
         //overrides the gamecam position to follow the player's position
         gamecam.position.x = player.body.getPosition().x;
@@ -116,12 +120,22 @@ public class PlayScreen implements Screen {
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();
         player.draw(game.batch);
+        drawSpikes();
         game.batch.end();
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
         controller.draw();
     }
 
+    public void drawSpikes() {
+        for(DownSpike d: downSpikes)
+            d.draw(game.batch);
+    }
+
+    public void updateSpikes(float dt) {
+        for(DownSpike d: downSpikes)
+            d.update(dt);
+    }
     @Override
     public void resize(int width, int height) {
         port.update(width, height);
