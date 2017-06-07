@@ -34,6 +34,7 @@ public class DownSpike extends MoveSpike {
     public void update(float dt){
         if(destroyMe && !destroyed){
             world.destroyBody(b2body);
+            System.out.println("i die");
             destroyed = true;
         }else if(!destroyed){
             setPosition(b2body.getPosition().x-getWidth()/2,b2body.getPosition().y-getHeight()/2);
@@ -66,7 +67,7 @@ public class DownSpike extends MoveSpike {
     }
 
     @Override
-    protected void destroySpike() {
+    public void destroySpike() {
         this.destroyMe = true;
     }
 }
