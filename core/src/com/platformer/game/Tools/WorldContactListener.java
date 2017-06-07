@@ -49,6 +49,10 @@ public class WorldContactListener implements ContactListener {
 
         switch(cDef){
             case platformerGame.GROUND_BIT | platformerGame.MOVESPIKE_BIT:
+                if(fixA.getFilterData().categoryBits==platformerGame.MOVESPIKE_BIT)
+                    ((MoveSpike)fixA.getUserData()).destroySpike();
+                else if(fixB.getFilterData().categoryBits==platformerGame.MOVESPIKE_BIT)
+                    ((MoveSpike)fixB.getUserData()).destroySpike();
         }
     }
 
