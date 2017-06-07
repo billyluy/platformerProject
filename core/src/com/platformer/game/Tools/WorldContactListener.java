@@ -26,7 +26,7 @@ public class WorldContactListener implements ContactListener {
         Fixture fixA = contact.getFixtureA();//moving
         Fixture fixB = contact.getFixtureB();//getting collided
         int cDef = fixA.getFilterData().categoryBits | fixB.getFilterData().categoryBits;
-        if(fixA.getUserData() != null && fixA.getUserData().equals("spike")){
+        if(fixA.getUserData() != null && fixA.getUserData().equals("spike") && fixB.getUserData().equals("player")){
             player.setDead(true);
             System.out.println("HIT SPIKE");
         }
