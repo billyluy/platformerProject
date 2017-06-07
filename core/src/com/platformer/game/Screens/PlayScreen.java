@@ -141,7 +141,9 @@ public class PlayScreen implements Screen {
 
     public void drawSpikes() {
         for(DownSpike d: downSpikes)
-            d.draw(game.batch);
+            if(!d.getDestroyed()) {
+                d.draw(game.batch);
+            }
     }
 
     public void updateSpikes(float dt) {
