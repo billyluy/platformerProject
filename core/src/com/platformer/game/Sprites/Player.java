@@ -24,7 +24,7 @@ public class Player extends Sprite {
     public Body body;
     public static int jump;
     protected Fixture fixture;
-    private enum State {FALLING, JUMPING, STANDING, RUNNING, DEAD};
+    public enum State {FALLING, JUMPING, STANDING, RUNNING, DEAD};
     public State currentState;
     public State previousState;
     private Animation<TextureRegion> playerRUN;
@@ -69,12 +69,6 @@ public class Player extends Sprite {
         playerY = getY();
 
     }
-
-    public void setDead(boolean b) {
-        isDead = b;
-    }
-
-    public boolean getIsDead() { return isDead; }
 
     public void update(float dt) {
         playerX = getX();
@@ -151,15 +145,19 @@ public class Player extends Sprite {
         fixture.setUserData("player");
     }
 
-    public void hit(){
-        isDead = true;
+    public void hit(){ isDead = true; }
+
+    public void setDead(boolean b) {
+        isDead = b;
     }
+
+    public boolean getIsDead() { return isDead; }
 
     public static float getPlayerX(){
         return playerX;
     }
 
-    public float getPlayerY(){
-        return playerY;
-    }
+    public float getPlayerY(){ return playerY; }
+
+    public float getStateTimer() { return stateTimer; }
 }

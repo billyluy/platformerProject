@@ -74,6 +74,14 @@ public class PlayScreen implements Screen {
         controller = new Controller();
     }
 
+    public boolean gameOver() {
+        if(player.currentState == Player.State.DEAD && player.getStateTimer() > 2){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public TextureAtlas getAtlas() {
         return atlas;
     }
@@ -124,6 +132,11 @@ public class PlayScreen implements Screen {
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
         controller.draw();
+
+        if(gameOver()) {
+            game.setScreen(new GameOverScreen(game));
+            dispose();
+        }
     }
 
     public void drawSpikes() {
