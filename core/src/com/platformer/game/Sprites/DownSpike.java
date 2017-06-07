@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -34,7 +35,6 @@ public class DownSpike extends MoveSpike {
     public void update(float dt){
         if(destroyMe && !destroyed){
             world.destroyBody(b2body);
-            System.out.println("i die");
             destroyed = true;
         }else if(!destroyed){
             setPosition(b2body.getPosition().x-getWidth()/2,b2body.getPosition().y-getHeight()/2);
@@ -69,6 +69,12 @@ public class DownSpike extends MoveSpike {
     @Override
     public void destroySpike() {
         this.destroyMe = true;
+    }
+
+    @Override
+    public void stay() {
+        b2body.setGravityScale(0);
+        b2body.setLinearVelocity(0,0);
     }
 
     public boolean getDestroyed() { return destroyed; }

@@ -33,4 +33,5 @@ public abstract class MoveSpike extends Sprite{
 
     protected abstract void defineMoveSpike();
     public abstract void destroySpike();
+    public abstract void stay();
 }

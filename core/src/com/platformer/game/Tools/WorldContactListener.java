@@ -30,21 +30,12 @@ public class WorldContactListener implements ContactListener {
             player.setDead(true);
             System.out.println("HIT SPIKE");
         }
-//        if(fixA.getUserData().equals("downspike") || fixB.getUserData().equals("downspike")){
-//            System.out.println("downspike move");
-//            player.setDead(true);
-//        }
         if(fixA.getUserData().equals("player") || fixB.getUserData().equals("player")){
             Fixture player = fixA.getUserData().equals("player") ? fixA:fixB;
             Fixture object = player.equals(fixA) ? fixB:fixA;
             if(object.getUserData() instanceof InteractiveTiles){
                 ((InteractiveTiles)object.getUserData()).onTouch();
             }
-//            if(object.getUserData()instanceof MoveSpike){
-//                System.out.println("i ran");
-//                this.player.setDead(true);
-//                ((MoveSpike)object.getUserData()).destroySpike();
-//            }
         }
 
         switch(cDef){
@@ -52,6 +43,15 @@ public class WorldContactListener implements ContactListener {
                 if(fixA.getFilterData().categoryBits==platformerGame.MOVESPIKE_BIT)
                     ((MoveSpike)fixA.getUserData()).destroySpike();
                 else if(fixB.getFilterData().categoryBits==platformerGame.MOVESPIKE_BIT)
+                    ((MoveSpike)fixB.getUserData()).destroySpike();
+            case platformerGame.PLAYER_BIT | platformerGame.MOVESPIKE_BIT:
+                if(fixA.getFilterData().categoryBits == platformerGame.PLAYER_BIT)
+                    this.player.setDead(true);
+                else if(fixB.getFilterData().categoryBits == platformerGame.PLAYER_BIT)
+                    this.player.setDead(true);
+                if(fixA.getFilterData().categoryBits == platformerGame.MOVESPIKE_BIT)
+                    ((MoveSpike)fixA.getUserData()).destroySpike();
+                else if(fixB.getFilterData().categoryBits == platformerGame.MOVESPIKE_BIT)
                     ((MoveSpike)fixB.getUserData()).destroySpike();
         }
     }
