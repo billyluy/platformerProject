@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
@@ -37,6 +38,7 @@ public class Player extends Sprite {
     private boolean runningRight;
     Sprite bloodSprite;
     private boolean isDead;
+    private boolean godMode;
     public static float playerX;
     public static float playerY;
 
@@ -70,10 +72,16 @@ public class Player extends Sprite {
         this.world = ps.getWorld();
         definePlayer();
         jump = 0;
+        godMode = false;
 
     }
 
     public void update(float dt) {
+        if(godMode){
+            Filter filter = new Filter();
+            filter.categoryBits = platformerGame.GOD_BIT;
+            fixture.setFilterData(filter);
+        }
         playerX = getX();
         playerY = getY();
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
@@ -141,8 +149,11 @@ public class Player extends Sprite {
         shape.setRadius(30 / platformerGame.PPM);
 
         fdef.filter.categoryBits = platformerGame.PLAYER_BIT;
-        fdef.filter.maskBits = platformerGame.GROUND_BIT | platformerGame.SPIKE_BIT | platformerGame.DISAPPERING_BIT | platformerGame.COIN_BIT | platformerGame.MOVESPIKE_BIT;
-
+        fdef.filter.maskBits = platformerGame.GROUND_BIT |
+                platformerGame.SPIKE_BIT |
+                platformerGame.DISAPPERING_BIT |
+                platformerGame.COIN_BIT |
+                platformerGame.MOVESPIKE_BIT;
         fdef.shape = shape;
         fixture = body.createFixture(fdef);
         fixture.setUserData("player");
@@ -170,5 +181,9 @@ public class Player extends Sprite {
 
     public float getStateTimer() {
         return stateTimer;
+    }
+
+    public void setGodMode(boolean b){
+        godMode = b;
     }
 }

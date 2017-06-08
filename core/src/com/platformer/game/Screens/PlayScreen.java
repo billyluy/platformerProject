@@ -69,15 +69,16 @@ public class PlayScreen implements Screen {
         player = new Player(this, x, y);
         downSpikes = new ArrayList<DownSpike>();
         //first level spikes
-        downSpikes.add(new DownSpike(this,500/platformerGame.PPM,31800/platformerGame.PPM,310));
-        downSpikes.add(new DownSpike(this, 280/platformerGame.PPM, 31800/platformerGame.PPM,310));
+        downSpikes.add(new DownSpike(this, 3170 / platformerGame.PPM, 31903 / platformerGame.PPM, 310));
+        downSpikes.add(new DownSpike(this, 3234 / platformerGame.PPM, 31903 / platformerGame.PPM, 310));
+        downSpikes.add(new DownSpike(this, 3298 / platformerGame.PPM, 31903 / platformerGame.PPM, 310));
 
         world.setContactListener(new WorldContactListener(player));
         controller = new Controller();
     }
 
     public boolean gameOver() {
-        if(player.currentState == Player.State.DEAD && player.getStateTimer() > 2){
+        if (player.currentState == Player.State.DEAD && player.getStateTimer() > 2) {
             return true;
         } else {
             return false;
@@ -99,6 +100,7 @@ public class PlayScreen implements Screen {
         updateSpikes(dt);
         world.step(1 / 60f, 6, 2);
         gamecam.position.x = player.body.getPosition().x;
+//        gamecam.position.y = player.body.getPosition().y;
         gamecam.update();
         renderer.setView(gamecam);
     }
@@ -106,7 +108,7 @@ public class PlayScreen implements Screen {
     public void handleInput(float dt) {
         if (Gdx.input.isKeyJustPressed(Input.Keys.UP) && (player.body.getLinearVelocity().y == 0 || player.jump > 0)) {
             player.body.applyLinearImpulse(new Vector2(0, 5f), player.body.getWorldCenter(), true);
-            player.jump=0;
+            player.jump = 0;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.body.getLinearVelocity().x <= 4)
             player.body.applyLinearImpulse(new Vector2(0.2f, 0), player.body.getWorldCenter(), true);
@@ -115,6 +117,7 @@ public class PlayScreen implements Screen {
 
         if (controller.isRightPressed() && player.body.getLinearVelocity().x <= 4)
             player.body.applyLinearImpulse(new Vector2(0.2f, 0), player.body.getWorldCenter(), true);
+//            System.out.println(player.getPlayerX());
         if (controller.isLeftPressed() && player.body.getLinearVelocity().x >= -4)
             player.body.applyLinearImpulse(new Vector2(-0.2f, 0), player.body.getWorldCenter(), true);
     }
@@ -135,23 +138,24 @@ public class PlayScreen implements Screen {
         hud.stage.draw();
         controller.draw();
 
-        if(gameOver()) {
+        if (gameOver()) {
             game.setScreen(new GameOverScreen(game));
             dispose();
         }
     }
 
     public void drawSpikes() {
-        for(DownSpike d: downSpikes)
-            if(!d.getDestroyed()) {
+        for (DownSpike d : downSpikes)
+            if (!d.getDestroyed()) {
                 d.draw(game.batch);
             }
     }
 
     public void updateSpikes(float dt) {
-        for(DownSpike d: downSpikes)
+        for (DownSpike d : downSpikes)
             d.update(dt);
     }
+
     @Override
     public void resize(int width, int height) {
         port.update(width, height);
@@ -173,11 +177,11 @@ public class PlayScreen implements Screen {
 
     }
 
-    public TiledMap getMap(){
+    public TiledMap getMap() {
         return map;
     }
 
-    public World getWorld(){
+    public World getWorld() {
         return world;
     }
 

@@ -46,6 +46,13 @@ public class Spikes {
             fdef.shape = shape2;
             fixture = body.createFixture(fdef);
             fixture.setUserData("spike");
+            setCategoryFilter(platformerGame.SPIKE_BIT);
         }
+    }
+
+    public void setCategoryFilter(short filterBit){
+        Filter filter = new Filter();
+        filter.categoryBits = filterBit;
+        fixture.setFilterData(filter);
     }
 }
