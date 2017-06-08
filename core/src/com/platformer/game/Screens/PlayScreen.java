@@ -68,8 +68,10 @@ public class PlayScreen implements Screen {
         new B2WorldCreator(this);
         player = new Player(this, x, y);
         downSpikes = new ArrayList<DownSpike>();
-        downSpikes.add(new DownSpike(this,500/platformerGame.PPM,31800/platformerGame.PPM));
-        downSpikes.add(new DownSpike(this, 280/platformerGame.PPM, 31800/platformerGame.PPM));
+        //first level spikes
+        downSpikes.add(new DownSpike(this,500/platformerGame.PPM,31800/platformerGame.PPM,310));
+        downSpikes.add(new DownSpike(this, 280/platformerGame.PPM, 31800/platformerGame.PPM,310));
+
         world.setContactListener(new WorldContactListener(player));
         controller = new Controller();
     }

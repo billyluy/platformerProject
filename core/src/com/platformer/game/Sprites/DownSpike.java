@@ -22,14 +22,17 @@ public class DownSpike extends MoveSpike {
     private boolean destroyMe;
     private boolean destroyed;
     private Sprite spikes;
+    private float bounds;
 
-    public DownSpike(PlayScreen screen,float x, float y) {
-        super(screen, x, y);
+    public DownSpike(PlayScreen screen,float x, float y, float bound) {
+        super(screen, x, y, bound);
 //        Image image = new Image(new Texture("sprites cancer\\spike down.png"));
         setBounds(getX(),getY(),64/platformerGame.PPM,64/platformerGame.PPM);
         destroyMe = false;
         destroyed = false;
         spikes = new Sprite(new TextureAtlas("spikes.pack").findRegion("spike down"));
+        this.bounds = bound;
+        velocity = new Vector2(0,-8);
     }
 
     public void update(float dt){
@@ -38,7 +41,9 @@ public class DownSpike extends MoveSpike {
             destroyed = true;
         }else if(!destroyed){
             setPosition(b2body.getPosition().x-getWidth()/2,b2body.getPosition().y-getHeight()/2);
-            if(getX()+getWidth()/2 >= Player.getPlayerX() &&  getX()-getWidth()/2 <= Player.getPlayerX()){
+            if(getX()+getWidth()/2 >= Player.getPlayerX() &&  getX()-getWidth()/2 <= Player.getPlayerX() && Player.getPlayerY()>=bounds){
+                System.out.println(Player.getPlayerX());
+                System.out.println(Player.getPlayerY());
                 b2body.setLinearVelocity(velocity);
             }
         }
@@ -77,5 +82,7 @@ public class DownSpike extends MoveSpike {
         b2body.setLinearVelocity(0,0);
     }
 
-    public boolean getDestroyed() { return destroyed; }
+    public boolean getDestroyed() {
+        return destroyed;
+    }
 }

@@ -16,21 +16,21 @@ import com.platformer.game.platformerGame;
  * Created by User on 5/20/2017.
  */
 
-public class Hud implements Disposable{
+public class Hud implements Disposable {
 
     public Stage stage;
     private Viewport port;
     Label worldLabel;
 
-    public Hud(SpriteBatch sb){
-        port = new FitViewport(platformerGame.gameWidth,platformerGame.gameHeight,new OrthographicCamera());
+    public Hud(SpriteBatch sb) {
+        port = new FitViewport(platformerGame.gameWidth, platformerGame.gameHeight, new OrthographicCamera());
         stage = new Stage(port, sb);
 
         Table table = new Table();
         table.top();
         table.setFillParent(true);
 
-        worldLabel = new Label("1-1",new Label.LabelStyle(new BitmapFont(), Color.BLACK));
+        worldLabel = new Label("1-1", new Label.LabelStyle(new BitmapFont(), Color.BLACK));
         table.add(worldLabel).expandX().padTop(10);
 
         stage.addActor(table);

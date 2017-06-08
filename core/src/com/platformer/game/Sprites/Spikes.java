@@ -21,11 +21,11 @@ import com.platformer.game.platformerGame;
  * Created by Student6 on 5/30/2017.
  */
 
-public class Spikes{
+public class Spikes {
 
     protected Fixture fixture;
 
-    public Spikes(World world, TiledMap map){
+    public Spikes(World world, TiledMap map) {
         BodyDef bdef = new BodyDef();
         FixtureDef fdef = new FixtureDef();
         PolygonShape shape = new PolygonShape();
@@ -38,7 +38,7 @@ public class Spikes{
             body = world.createBody(bdef);
 
             float vertices[] = ((PolylineMapObject) object).getPolyline().getTransformedVertices();
-            for(int i = 0; i < vertices.length; i ++){
+            for (int i = 0; i < vertices.length; i++) {
                 vertices[i] /= platformerGame.PPM;
             }
             ChainShape shape2 = new ChainShape();

@@ -26,33 +26,33 @@ public class WorldContactListener implements ContactListener {
         Fixture fixA = contact.getFixtureA();//moving
         Fixture fixB = contact.getFixtureB();//getting collided
         int cDef = fixA.getFilterData().categoryBits | fixB.getFilterData().categoryBits;
-        if(fixA.getUserData() != null && fixA.getUserData().equals("spike") && fixB.getUserData().equals("player")){
+        if (fixA.getUserData() != null && fixA.getUserData().equals("spike") && fixB.getUserData().equals("player")) {
             player.setDead(true);
             System.out.println("HIT SPIKE");
         }
-        if(fixA.getUserData().equals("player") || fixB.getUserData().equals("player")){
-            Fixture player = fixA.getUserData().equals("player") ? fixA:fixB;
-            Fixture object = player.equals(fixA) ? fixB:fixA;
-            if(object.getUserData() instanceof InteractiveTiles){
-                ((InteractiveTiles)object.getUserData()).onTouch();
+        if (fixA.getUserData().equals("player") || fixB.getUserData().equals("player")) {
+            Fixture player = fixA.getUserData().equals("player") ? fixA : fixB;
+            Fixture object = player.equals(fixA) ? fixB : fixA;
+            if (object.getUserData() instanceof InteractiveTiles) {
+                ((InteractiveTiles) object.getUserData()).onTouch();
             }
         }
 
-        switch(cDef){
+        switch (cDef) {
             case platformerGame.GROUND_BIT | platformerGame.MOVESPIKE_BIT:
-                if(fixA.getFilterData().categoryBits==platformerGame.MOVESPIKE_BIT)
-                    ((MoveSpike)fixA.getUserData()).destroySpike();
-                else if(fixB.getFilterData().categoryBits==platformerGame.MOVESPIKE_BIT)
-                    ((MoveSpike)fixB.getUserData()).destroySpike();
+                if (fixA.getFilterData().categoryBits == platformerGame.MOVESPIKE_BIT)
+                    ((MoveSpike) fixA.getUserData()).destroySpike();
+                else if (fixB.getFilterData().categoryBits == platformerGame.MOVESPIKE_BIT)
+                    ((MoveSpike) fixB.getUserData()).destroySpike();
             case platformerGame.PLAYER_BIT | platformerGame.MOVESPIKE_BIT:
-                if(fixA.getFilterData().categoryBits == platformerGame.PLAYER_BIT)
+                if (fixA.getFilterData().categoryBits == platformerGame.PLAYER_BIT)
                     this.player.setDead(true);
-                else if(fixB.getFilterData().categoryBits == platformerGame.PLAYER_BIT)
+                else if (fixB.getFilterData().categoryBits == platformerGame.PLAYER_BIT)
                     this.player.setDead(true);
-                if(fixA.getFilterData().categoryBits == platformerGame.MOVESPIKE_BIT)
-                    ((MoveSpike)fixA.getUserData()).destroySpike();
-                else if(fixB.getFilterData().categoryBits == platformerGame.MOVESPIKE_BIT)
-                    ((MoveSpike)fixB.getUserData()).destroySpike();
+                if (fixA.getFilterData().categoryBits == platformerGame.MOVESPIKE_BIT)
+                    ((MoveSpike) fixA.getUserData()).destroySpike();
+                else if (fixB.getFilterData().categoryBits == platformerGame.MOVESPIKE_BIT)
+                    ((MoveSpike) fixB.getUserData()).destroySpike();
         }
     }
 

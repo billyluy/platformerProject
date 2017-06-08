@@ -18,9 +18,6 @@ import sun.awt.PlatformFont;
  */
 
 public class Coin extends InteractiveTiles {
-
-    TiledMapTile coin;
-
     public Coin(PlayScreen screen, Rectangle bounds) {
         super(screen, bounds);
         fixture.setUserData(this);
@@ -34,10 +31,6 @@ public class Coin extends InteractiveTiles {
 //        setCategoryFilter(platformerGame.DESTROY_BIT);
 //        getCell().setTile(null);
         Player.jump ++;
-    }
-
-    public void restart(){
-
     }
 }
 

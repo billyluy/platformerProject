@@ -24,7 +24,10 @@ public class Player extends Sprite {
     public Body body;
     public static int jump;
     protected Fixture fixture;
-    public enum State {FALLING, JUMPING, STANDING, RUNNING, DEAD};
+
+    public enum State {FALLING, JUMPING, STANDING, RUNNING, DEAD}
+
+    ;
     public State currentState;
     public State previousState;
     private Animation<TextureRegion> playerRUN;
@@ -35,9 +38,9 @@ public class Player extends Sprite {
     Sprite bloodSprite;
     private boolean isDead;
     public static float playerX;
-    public float playerY;
+    public static float playerY;
 
-    public Player(PlayScreen ps, float x, float y){
+    public Player(PlayScreen ps, float x, float y) {
         super(ps.getAtlas().findRegion("run1"));
         bloodSprite = new Sprite(new TextureAtlas("blood.pack").findRegion("bloods"));
         playerX = x;
@@ -48,16 +51,16 @@ public class Player extends Sprite {
         runningRight = true;
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
-        for(int i = 0; i < 3; i ++)
+        for (int i = 0; i < 3; i++)
             frames.add(new TextureRegion(getTexture(), i * 64, 0, 64, 64));
         playerRUN = new Animation<TextureRegion>(0.2f, frames);
         frames.clear();
-        for(int i = 3; i < 5; i ++)
+        for (int i = 3; i < 5; i++)
             frames.add(new TextureRegion(getTexture(), i * 64, 0, 64, 64));
         playerSTAND = new Animation<TextureRegion>(0.2f, frames);
         frames.clear();
-        for(int i = 0; i < 3; i ++) {
-            for(int j = 0; j < 3; j ++) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
                 frames.add(new TextureRegion(bloodSprite.getTexture(), j * 333, i * 333, 333, 333));
             }
         }
@@ -81,7 +84,7 @@ public class Player extends Sprite {
         currentState = getState();
 
         TextureRegion region;
-        switch(currentState){
+        switch (currentState) {
             case DEAD:
                 region = playerDEAD.getKeyFrame(stateTimer, false);
                 setSize(333 / platformerGame.PPM, 333 / platformerGame.PPM);
@@ -102,10 +105,10 @@ public class Player extends Sprite {
                 region = playerSTAND.getKeyFrame(stateTimer, true);
                 break;
         }
-        if((body.getLinearVelocity().x < 0 || !runningRight) && !region.isFlipX()){
+        if ((body.getLinearVelocity().x < 0 || !runningRight) && !region.isFlipX()) {
             region.flip(true, false);
             runningRight = false;
-        } else if((body.getLinearVelocity().x > 0 || runningRight) && region.isFlipX()) {
+        } else if ((body.getLinearVelocity().x > 0 || runningRight) && region.isFlipX()) {
             region.flip(true, false);
             runningRight = true;
         }
@@ -115,18 +118,18 @@ public class Player extends Sprite {
     }
 
     public State getState() {
-        if(isDead)
+        if (isDead)
             return State.DEAD;
-        else if(body.getLinearVelocity().y > 0)
+        else if (body.getLinearVelocity().y > 0)
             return State.JUMPING;
-        else if(body.getLinearVelocity().y < 0)
+        else if (body.getLinearVelocity().y < 0)
             return State.FALLING;
-        else if(body.getLinearVelocity().x != 0)
+        else if (body.getLinearVelocity().x != 0)
             return State.RUNNING;
         else return State.STANDING;
     }
 
-    public void definePlayer(){
+    public void definePlayer() {
         BodyDef bdef = new BodyDef();
         //position is based on the entire map
         bdef.position.set(playerX, playerY);
@@ -135,7 +138,7 @@ public class Player extends Sprite {
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(30/platformerGame.PPM);
+        shape.setRadius(30 / platformerGame.PPM);
 
         fdef.filter.categoryBits = platformerGame.PLAYER_BIT;
         fdef.filter.maskBits = platformerGame.GROUND_BIT | platformerGame.SPIKE_BIT | platformerGame.DISAPPERING_BIT | platformerGame.COIN_BIT | platformerGame.MOVESPIKE_BIT;
@@ -145,19 +148,27 @@ public class Player extends Sprite {
         fixture.setUserData("player");
     }
 
-    public void hit(){ isDead = true; }
+    public void hit() {
+        isDead = true;
+    }
 
     public void setDead(boolean b) {
         isDead = b;
     }
 
-    public boolean getIsDead() { return isDead; }
+    public boolean getIsDead() {
+        return isDead;
+    }
 
-    public static float getPlayerX(){
+    public static float getPlayerX() {
         return playerX;
     }
 
-    public float getPlayerY(){ return playerY; }
+    public static float getPlayerY() {
+        return playerY;
+    }
 
-    public float getStateTimer() { return stateTimer; }
+    public float getStateTimer() {
+        return stateTimer;
+    }
 }

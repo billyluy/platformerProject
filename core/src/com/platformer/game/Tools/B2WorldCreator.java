@@ -20,27 +20,27 @@ import com.platformer.game.Sprites.Spikes;
  */
 
 public class B2WorldCreator {
-    public B2WorldCreator(PlayScreen screen){
+    public B2WorldCreator(PlayScreen screen) {
         World world = screen.getWorld();
         TiledMap map = screen.getMap();
         BodyDef bdef = new BodyDef();
-        FixtureDef fdef  = new FixtureDef();
+        FixtureDef fdef = new FixtureDef();
         PolygonShape shape = new PolygonShape();
         Body body;
         for (MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            new Ground(screen,rect);
+            new Ground(screen, rect);
         }
         for (MapObject object : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            new DisappearingTile(screen,rect);
+            new DisappearingTile(screen, rect);
         }
         for (MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            new Coin(screen,rect);
+            new Coin(screen, rect);
         }
 
-        new Spikes(world,map);
+        new Spikes(world, map);
 
     }
 }

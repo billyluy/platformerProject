@@ -17,8 +17,8 @@ import com.platformer.game.platformerGame;
  * Created by Student6 on 5/26/2017.
  */
 
-public class DisappearingTile extends InteractiveTiles{
-    public DisappearingTile(PlayScreen screen, Rectangle bounds){
+public class DisappearingTile extends InteractiveTiles {
+    public DisappearingTile(PlayScreen screen, Rectangle bounds) {
         super(screen, bounds);
         fixture.setUserData(this);
         setCategoryFilter(platformerGame.DISAPPERING_BIT);

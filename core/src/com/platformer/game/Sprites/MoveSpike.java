@@ -23,12 +23,11 @@ public abstract class MoveSpike extends Sprite{
     protected Fixture fixture;
     public Vector2 velocity;
 
-    public MoveSpike(PlayScreen screen, float x, float y){
+    public MoveSpike(PlayScreen screen, float x, float y, float bound){
         this.world = screen.getWorld();
         this.screen = screen;
         setPosition(x,y);
         defineMoveSpike();
-        velocity = new Vector2(0,-8);
     }
 
     protected abstract void defineMoveSpike();

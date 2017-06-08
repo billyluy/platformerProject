@@ -22,7 +22,7 @@ public class Controller {
     boolean leftPress, rightPress;
     OrthographicCamera cam;
 
-    public Controller(){
+    public Controller() {
         cam = new OrthographicCamera();
         viewport = new FitViewport(platformerGame.gameWidth, platformerGame.gameHeight, cam);
         stage = new Stage(viewport, platformerGame.batch);
@@ -32,8 +32,8 @@ public class Controller {
         table.left().bottom();
 
         Image left = new Image(new Texture("control/left.png"));
-        left.setSize(100,100);
-        left.addListener(new InputListener(){
+        left.setSize(100, 100);
+        left.addListener(new InputListener() {
 
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -48,8 +48,8 @@ public class Controller {
         });
 
         Image right = new Image(new Texture("control/right.png"));
-        right.setSize(100,100);
-        right.addListener(new InputListener(){
+        right.setSize(100, 100);
+        right.addListener(new InputListener() {
 
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -65,16 +65,16 @@ public class Controller {
 
 //        table.pack();
         table.add(left).size(left.getWidth(), left.getHeight());
-        table.add().pad(30,30,30,30);
+        table.add().pad(30, 30, 30, 30);
         table.add(right).size(right.getWidth(), right.getHeight());
-        table.pad(30,30,30,30);
+        table.pad(30, 30, 30, 30);
 
 
         stage.addActor(table);
 
     }
 
-    public void draw(){
+    public void draw() {
         stage.draw();
     }
 
@@ -86,7 +86,7 @@ public class Controller {
         return rightPress;
     }
 
-    public void resize(int width, int height){
+    public void resize(int width, int height) {
         viewport.update(width, height);
     }
 }
