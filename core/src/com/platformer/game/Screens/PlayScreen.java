@@ -48,6 +48,8 @@ public class PlayScreen implements Screen {
     private ArrayList<LeftSpike> leftSpikes;
     private TextureAtlas atlas;
     private Controller controller;
+    private float playerX;
+    private float playerY;
 
 
     public PlayScreen(platformerGame game, float x, float y) {
@@ -70,6 +72,8 @@ public class PlayScreen implements Screen {
         world = new World(new Vector2(0, -10), true);
         new B2WorldCreator(this);
         player = new Player(this, x, y);
+        playerX = x;
+        playerY = y;
         downSpikes = new ArrayList<DownSpike>();
         //first level spikes
         downSpikes.add(new DownSpike(this, 3170 / platformerGame.PPM, 31903 / platformerGame.PPM, 310));
@@ -81,6 +85,18 @@ public class PlayScreen implements Screen {
 
         world.setContactListener(new WorldContactListener(player));
         controller = new Controller();
+    }
+
+    public void setPlayerX(float x) {
+        playerX = x;
+    }
+
+    public void setPlayerY(float y) {
+        playerY = y;
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 
     public boolean gameOver() {
@@ -149,7 +165,7 @@ public class PlayScreen implements Screen {
         controller.draw();
 
         if (gameOver()) {
-            game.setScreen(new GameOverScreen(game));
+            game.setScreen(new GameOverScreen(game, playerX, playerY));
             dispose();
         }
     }

@@ -22,8 +22,10 @@ public class GameOverScreen implements Screen {
     private Viewport viewport;
     private Stage stage;
     private Game game;
+    private float playerX;
+    private float playerY;
 
-    public GameOverScreen(Game game) {
+    public GameOverScreen(Game game, float x, float y) {
         this.game = game;
         viewport = new FitViewport(platformerGame.gameWidth, platformerGame.gameHeight, new OrthographicCamera());
         stage = new Stage(viewport, ((platformerGame) game).batch);
@@ -43,6 +45,8 @@ public class GameOverScreen implements Screen {
         table.add(playAgainLabel).expand().padTop(10f);
 
         stage.addActor(table);
+        playerX = x;
+        playerY = y;
     }
 
     @Override
@@ -54,7 +58,7 @@ public class GameOverScreen implements Screen {
     public void render(float delta) {
         if (Gdx.input.justTouched()) {
             //later replace with save button coordinates
-            game.setScreen(new PlayScreen((platformerGame) game, 300 / platformerGame.PPM, 31164 / platformerGame.PPM));
+            game.setScreen(new PlayScreen((platformerGame) game, playerX, playerY));
             dispose();
         }
         Gdx.gl.glClearColor(0, 0, 0, 1);
