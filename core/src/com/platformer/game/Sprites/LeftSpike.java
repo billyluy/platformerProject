@@ -38,14 +38,14 @@ public class LeftSpike extends MoveSpike {
             destroyed = true;
         }else if(!destroyed){
             setPosition(b2body.getPosition().x-getWidth()/2,b2body.getPosition().y-getHeight()/2);
-            if(getX()+getWidth()/2 >= Player.getPlayerX() &&  getX()-getWidth()/2 <= Player.getPlayerX() && Player.getPlayerX()==bounds){
+            if(getY()+getWidth()/2 >= Player.getPlayerY() &&  getY()-getWidth()/2 <= Player.getPlayerY() && Player.getPlayerY()>=bounds){
                 System.out.println(Player.getPlayerX());
                 System.out.println(Player.getPlayerY());
                 b2body.setLinearVelocity(velocity);
             }
         }
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
-        setRegion(new TextureRegion(spikes.getTexture(), 0, 0, 64, 64));
+        setRegion(new TextureRegion(spikes.getTexture(), 64, 0, 64, 64));
     }
 
     @Override

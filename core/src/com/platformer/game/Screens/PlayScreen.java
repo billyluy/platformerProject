@@ -81,7 +81,7 @@ public class PlayScreen implements Screen {
         downSpikes.add(new DownSpike(this, 3298 / platformerGame.PPM, 31903 / platformerGame.PPM, 310));
 
         leftSpikes = new ArrayList<LeftSpike>();
-        leftSpikes.add(new LeftSpike(this, 3170 / platformerGame.PPM, 31500 / platformerGame.PPM, 310));
+        leftSpikes.add(new LeftSpike(this, 3805 / platformerGame.PPM, 30240 / platformerGame.PPM, 310));
 
         world.setContactListener(new WorldContactListener(player));
         controller = new Controller();
@@ -117,20 +117,23 @@ public class PlayScreen implements Screen {
     }
 
     public void update(float dt) {
+//        System.out.println(player.body.getPosition().x);
+//        System.out.println(player.body.getPosition().y);
         handleInput(dt);
         player.update(dt);
         updateSpikes(dt);
         world.step(1 / 60f, 6, 2);
         gamecam.position.x = player.body.getPosition().x;
+        gamecam.position.y = player.body.getPosition().y;
         gamecam.update();
         renderer.setView(gamecam);
     }
 
     public void handleInput(float dt) {
         //Key Press
-        if (Gdx.input.isKeyJustPressed(Input.Keys.UP) && (player.body.getLinearVelocity().y == 0 || player.jump > 0)) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.UP) /*&& (player.body.getLinearVelocity().y == 0 || player.jump > 0)*/) {
             player.body.applyLinearImpulse(new Vector2(0, 5f), player.body.getWorldCenter(), true);
-            player.jump = 0;
+//            player.jump = 0;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.body.getLinearVelocity().x <= 4)
             player.body.applyLinearImpulse(new Vector2(0.2f, 0), player.body.getWorldCenter(), true);
