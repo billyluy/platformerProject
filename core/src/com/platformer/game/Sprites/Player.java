@@ -153,7 +153,8 @@ public class Player extends Sprite {
                 platformerGame.SPIKE_BIT |
                 platformerGame.DISAPPERING_BIT |
                 platformerGame.COIN_BIT |
-                platformerGame.MOVESPIKE_BIT;
+                platformerGame.MOVESPIKE_BIT |
+                platformerGame.SAVE_BIT;
         fdef.shape = shape;
         fixture = body.createFixture(fdef);
         fixture.setUserData("player");

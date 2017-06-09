@@ -13,6 +13,7 @@ import com.platformer.game.Screens.PlayScreen;
 import com.platformer.game.Sprites.Coin;
 import com.platformer.game.Sprites.DisappearingTile;
 import com.platformer.game.Sprites.Ground;
+import com.platformer.game.Sprites.Save;
 import com.platformer.game.Sprites.Spikes;
 
 /**
@@ -38,6 +39,11 @@ public class B2WorldCreator {
         for (MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             new Coin(screen, rect);
+        }
+
+        for (MapObject object : map.getLayers().get(7).getObjects().getByType(RectangleMapObject.class)) {
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            new Save(screen, rect);
         }
 
         new Spikes(world, map);
