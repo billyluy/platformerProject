@@ -29,7 +29,7 @@ public class platformerGame extends Game {
 
     @Override
     public void create() {
-        initialX = 3100 / platformerGame.PPM;
+        initialX = 128 / platformerGame.PPM;
         initialY = 31164 / platformerGame.PPM;
         batch = new SpriteBatch();
         setScreen(new PlayScreen(this, initialX, initialY));

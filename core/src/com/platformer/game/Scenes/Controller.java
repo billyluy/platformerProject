@@ -19,7 +19,7 @@ import com.platformer.game.platformerGame;
 public class Controller {
     Viewport viewport;
     Stage stage;
-    boolean leftPress, rightPress;
+    boolean leftPress, rightPress, upPress;
     OrthographicCamera cam;
 
     public Controller() {
@@ -63,10 +63,27 @@ public class Controller {
             }
         });
 
-//        table.pack();
+        Image up = new Image(new Texture("control/up.png"));
+        up.setSize(100, 100);
+        up.addListener(new InputListener() {
+
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                upPress = true;
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                upPress = false;
+            }
+        });
+
         table.add(left).size(left.getWidth(), left.getHeight());
         table.add().pad(30, 30, 30, 30);
         table.add(right).size(right.getWidth(), right.getHeight());
+        table.add().pad(0, 400, 0, 400);
+        table.add(up).size(up.getWidth(), up.getHeight());
         table.pad(30, 30, 30, 30);
 
 
@@ -84,6 +101,10 @@ public class Controller {
 
     public boolean isRightPressed() {
         return rightPress;
+    }
+
+    public boolean isUpPress() {
+        return upPress;
     }
 
     public void resize(int width, int height) {

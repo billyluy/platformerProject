@@ -17,6 +17,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.platformer.game.Scenes.Controller;
 import com.platformer.game.Scenes.Hud;
 import com.platformer.game.Sprites.DownSpike;
+import com.platformer.game.Sprites.LeftSpike;
+import com.platformer.game.Sprites.MoveSpike;
 import com.platformer.game.Sprites.Player;
 import com.platformer.game.Tools.B2WorldCreator;
 import com.platformer.game.Tools.WorldContactListener;
@@ -43,6 +45,7 @@ public class PlayScreen implements Screen {
     private Box2DDebugRenderer b2dr;
     private Player player;
     private ArrayList<DownSpike> downSpikes;
+    private ArrayList<LeftSpike> leftSpikes;
     private TextureAtlas atlas;
     private Controller controller;
 
@@ -73,6 +76,9 @@ public class PlayScreen implements Screen {
         downSpikes.add(new DownSpike(this, 3234 / platformerGame.PPM, 31903 / platformerGame.PPM, 310));
         downSpikes.add(new DownSpike(this, 3298 / platformerGame.PPM, 31903 / platformerGame.PPM, 310));
 
+        leftSpikes = new ArrayList<LeftSpike>();
+        leftSpikes.add(new LeftSpike(this, 3170 / platformerGame.PPM, 31500 / platformerGame.PPM, 310));
+
         world.setContactListener(new WorldContactListener(player));
         controller = new Controller();
     }
@@ -100,12 +106,12 @@ public class PlayScreen implements Screen {
         updateSpikes(dt);
         world.step(1 / 60f, 6, 2);
         gamecam.position.x = player.body.getPosition().x;
-//        gamecam.position.y = player.body.getPosition().y;
         gamecam.update();
         renderer.setView(gamecam);
     }
 
     public void handleInput(float dt) {
+        //Key Press
         if (Gdx.input.isKeyJustPressed(Input.Keys.UP) && (player.body.getLinearVelocity().y == 0 || player.jump > 0)) {
             player.body.applyLinearImpulse(new Vector2(0, 5f), player.body.getWorldCenter(), true);
             player.jump = 0;
@@ -115,11 +121,15 @@ public class PlayScreen implements Screen {
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.body.getLinearVelocity().x >= -4)
             player.body.applyLinearImpulse(new Vector2(-0.2f, 0), player.body.getWorldCenter(), true);
 
+        //Controller Press
         if (controller.isRightPressed() && player.body.getLinearVelocity().x <= 4)
             player.body.applyLinearImpulse(new Vector2(0.2f, 0), player.body.getWorldCenter(), true);
-//            System.out.println(player.getPlayerX());
         if (controller.isLeftPressed() && player.body.getLinearVelocity().x >= -4)
             player.body.applyLinearImpulse(new Vector2(-0.2f, 0), player.body.getWorldCenter(), true);
+        if (controller.isUpPress() && (player.body.getLinearVelocity().y == 0 || player.jump > 0)) {
+            player.body.applyLinearImpulse(new Vector2(0, 5f), player.body.getWorldCenter(), true);
+            player.jump = 0;
+        }
     }
 
     @Override
@@ -149,10 +159,16 @@ public class PlayScreen implements Screen {
             if (!d.getDestroyed()) {
                 d.draw(game.batch);
             }
+        for (LeftSpike d : leftSpikes)
+            if (!d.getDestroyed()) {
+                d.draw(game.batch);
+            }
     }
 
     public void updateSpikes(float dt) {
         for (DownSpike d : downSpikes)
+            d.update(dt);
+        for (LeftSpike d : leftSpikes)
             d.update(dt);
     }
 

@@ -1,6 +1,5 @@
 package com.platformer.game.Sprites;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -8,8 +7,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.platformer.game.Screens.PlayScreen;
 import com.platformer.game.platformerGame;
 
@@ -17,22 +14,22 @@ import com.platformer.game.platformerGame;
  * Created by User on 6/4/2017.
  */
 
-public class DownSpike extends MoveSpike {
+public class LeftSpike extends MoveSpike {
 
     private boolean destroyMe;
     private boolean destroyed;
     private Sprite spikes;
     private float bounds;
 
-    public DownSpike(PlayScreen screen,float x, float y, float bound) {
+    public LeftSpike(PlayScreen screen, float x, float y, float bound) {
         super(screen, x, y, bound);
 //        Image image = new Image(new Texture("sprites cancer\\spike down.png"));
-        this.destroyed=false;
-        this.destroyMe=false;
         setBounds(getX(),getY(),64/platformerGame.PPM,64/platformerGame.PPM);
-        spikes = new Sprite(new TextureAtlas("spikes.pack").findRegion("spike down"));
+        destroyMe = false;
+        destroyed = false;
+        spikes = new Sprite(new TextureAtlas("spikes.pack").findRegion("spike left"));
         this.bounds = bound;
-        velocity = new Vector2(0,-8);
+        velocity = new Vector2(-8,0);
     }
 
     public void update(float dt){
@@ -41,7 +38,7 @@ public class DownSpike extends MoveSpike {
             destroyed = true;
         }else if(!destroyed){
             setPosition(b2body.getPosition().x-getWidth()/2,b2body.getPosition().y-getHeight()/2);
-            if(getX()+getWidth()/2 >= Player.getPlayerX() &&  getX()-getWidth()/2 <= Player.getPlayerX() && Player.getPlayerY()>=bounds){
+            if(getX()+getWidth()/2 >= Player.getPlayerX() &&  getX()-getWidth()/2 <= Player.getPlayerX() && Player.getPlayerX()==bounds){
                 System.out.println(Player.getPlayerX());
                 System.out.println(Player.getPlayerY());
                 b2body.setLinearVelocity(velocity);
@@ -71,11 +68,12 @@ public class DownSpike extends MoveSpike {
         fixture.setUserData(this);
     }
 
-    public boolean getDestroyed() {
-        return destroyed;
-    }
-
+    @Override
     public void destroySpike() {
         this.destroyMe = true;
+    }
+
+    public boolean getDestroyed() {
+        return destroyed;
     }
 }
