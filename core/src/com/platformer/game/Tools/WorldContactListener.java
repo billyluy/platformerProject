@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.platformer.game.Sprites.BallSpike;
 import com.platformer.game.Sprites.InteractiveTiles;
 import com.platformer.game.Sprites.MoveSpike;
 import com.platformer.game.Sprites.Player;
@@ -42,17 +43,24 @@ public class WorldContactListener implements ContactListener {
             case platformerGame.GROUND_BIT | platformerGame.MOVESPIKE_BIT:
                 if (fixA.getFilterData().categoryBits == platformerGame.MOVESPIKE_BIT)
                     ((MoveSpike) fixA.getUserData()).destroySpike();
-                else if (fixB.getFilterData().categoryBits == platformerGame.MOVESPIKE_BIT)
+                else
                     ((MoveSpike) fixB.getUserData()).destroySpike();
+                break;
             case platformerGame.PLAYER_BIT | platformerGame.MOVESPIKE_BIT:
                 if (fixA.getFilterData().categoryBits == platformerGame.PLAYER_BIT)
                     this.player.setDead(true);
-                else if (fixB.getFilterData().categoryBits == platformerGame.PLAYER_BIT)
+                else
                     this.player.setDead(true);
                 if (fixA.getFilterData().categoryBits == platformerGame.MOVESPIKE_BIT)
                     ((MoveSpike) fixA.getUserData()).destroySpike();
-                else if (fixB.getFilterData().categoryBits == platformerGame.MOVESPIKE_BIT)
+                else
                     ((MoveSpike) fixB.getUserData()).destroySpike();
+                break;
+            case platformerGame.BALL_BIT | platformerGame.GROUND_BIT:
+                if (fixA.getFilterData().categoryBits == platformerGame.BALL_BIT)
+                    ((BallSpike) fixA.getUserData()).changeVelocity(false, true);
+                else
+                    ((BallSpike) fixB.getUserData()).changeVelocity(false, true);
         }
     }
 

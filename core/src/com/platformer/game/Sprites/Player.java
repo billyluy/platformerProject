@@ -79,7 +79,6 @@ public class Player extends Sprite {
     public void update(float dt) {
         if(godMode){
             Filter filter = new Filter();
-            filter.categoryBits = platformerGame.GOD_BIT;
             fixture.setFilterData(filter);
         }
         playerX = getX();

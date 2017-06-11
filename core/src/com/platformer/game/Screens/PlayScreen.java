@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.platformer.game.Scenes.Controller;
 import com.platformer.game.Scenes.Hud;
+import com.platformer.game.Sprites.BallSpike;
 import com.platformer.game.Sprites.DownSpike;
 import com.platformer.game.Sprites.LeftSpike;
 import com.platformer.game.Sprites.MoveSpike;
@@ -46,6 +47,7 @@ public class PlayScreen implements Screen {
     private Player player;
     private ArrayList<DownSpike> downSpikes;
     private ArrayList<LeftSpike> leftSpikes;
+    private ArrayList<BallSpike> ballSpikes;
     private TextureAtlas atlas;
     private Controller controller;
     private float playerX;
@@ -83,6 +85,9 @@ public class PlayScreen implements Screen {
         leftSpikes = new ArrayList<LeftSpike>();
         leftSpikes.add(new LeftSpike(this, 3805 / platformerGame.PPM, 30240 / platformerGame.PPM, 310));
 
+        ballSpikes = new ArrayList<BallSpike>();
+        ballSpikes.add(new BallSpike(this, 3000 / platformerGame.PPM, 31903 / platformerGame.PPM, 310));
+
         world.setContactListener(new WorldContactListener(player));
         controller = new Controller();
     }
@@ -117,14 +122,19 @@ public class PlayScreen implements Screen {
     }
 
     public void update(float dt) {
+        if(player.getY()<300){
+            gamecam.position.y = (32000 - (port.getWorldHeight() / 2)) / platformerGame.PPM - port.getWorldHeight();
+            System.out.println("we in");
+        }
 //        System.out.println(player.body.getPosition().x);
 //        System.out.println(player.body.getPosition().y);
+//        System.out.println(player.getPlayerY());
         handleInput(dt);
         player.update(dt);
         updateSpikes(dt);
         world.step(1 / 60f, 6, 2);
         gamecam.position.x = player.body.getPosition().x;
-        gamecam.position.y = player.body.getPosition().y;
+//        gamecam.position.y = player.body.getPosition().y;
         gamecam.update();
         renderer.setView(gamecam);
     }
@@ -178,17 +188,23 @@ public class PlayScreen implements Screen {
             if (!d.getDestroyed()) {
                 d.draw(game.batch);
             }
-        for (LeftSpike d : leftSpikes)
-            if (!d.getDestroyed()) {
-                d.draw(game.batch);
+        for (LeftSpike l : leftSpikes)
+            if (!l.getDestroyed()) {
+                l.draw(game.batch);
+            }
+        for(BallSpike b: ballSpikes)
+            if(!b.getDestroyed()){
+                b.draw(game.batch);
             }
     }
 
     public void updateSpikes(float dt) {
         for (DownSpike d : downSpikes)
             d.update(dt);
-        for (LeftSpike d : leftSpikes)
-            d.update(dt);
+        for (LeftSpike l : leftSpikes)
+            l.update(dt);
+        for (BallSpike b : ballSpikes)
+            b.update(dt);
     }
 
     @Override
