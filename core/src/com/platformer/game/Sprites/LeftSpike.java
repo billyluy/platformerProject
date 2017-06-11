@@ -23,24 +23,23 @@ public class LeftSpike extends MoveSpike {
 
     public LeftSpike(PlayScreen screen, float x, float y, float bound) {
         super(screen, x, y, bound);
-//        Image image = new Image(new Texture("sprites cancer\\spike down.png"));
-        setBounds(getX(),getY(),64/platformerGame.PPM,64/platformerGame.PPM);
+        setBounds(getX(), getY(), 64 / platformerGame.PPM, 64 / platformerGame.PPM);
         destroyMe = false;
         destroyed = false;
         spikes = new Sprite(new TextureAtlas("spikes.pack").findRegion("spike left"));
         this.bounds = bound;
-        velocity = new Vector2(-8,0);
+        velocity = new Vector2(-8, 0);
     }
 
-    public void update(float dt){
-        if(destroyMe && !destroyed){
+    public void update(float dt) {
+        if (destroyMe && !destroyed) {
             world.destroyBody(b2body);
             destroyed = true;
-        }else if(!destroyed){
-            setPosition(b2body.getPosition().x-getWidth()/2,b2body.getPosition().y-getHeight()/2);
-            if(getY()+getWidth()/2 >= Player.getPlayerY() &&  getY()-getWidth()/2 <= Player.getPlayerY() && Player.getPlayerY()>=bounds){
-                System.out.println(Player.getPlayerX());
-                System.out.println(Player.getPlayerY());
+        } else if (!destroyed) {
+            setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
+//            System.out.println("getY:" + getY());
+//            System.out.println("playerY:" + Player.getPlayerY());
+            if (getY() + getHeight() / 2 >= Player.getPlayerY() && getY() - getHeight() / 2 <= Player.getPlayerY() && Player.getPlayerY() >= bounds) {
                 b2body.setLinearVelocity(velocity);
             }
         }
@@ -51,14 +50,14 @@ public class LeftSpike extends MoveSpike {
     @Override
     protected void defineMoveSpike() {
         BodyDef bdef = new BodyDef();
-        bdef.position.set(getX(),getY());
+        bdef.position.set(getX(), getY());
         bdef.type = BodyDef.BodyType.DynamicBody;
-        b2body= world.createBody(bdef);
+        b2body = world.createBody(bdef);
         b2body.setGravityScale(0);
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(30/platformerGame.PPM);
+        shape.setRadius(30 / platformerGame.PPM);
 
         fdef.filter.categoryBits = platformerGame.MOVESPIKE_BIT;
         fdef.filter.maskBits = platformerGame.GROUND_BIT | platformerGame.PLAYER_BIT;

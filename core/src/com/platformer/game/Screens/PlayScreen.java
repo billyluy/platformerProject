@@ -78,12 +78,13 @@ public class PlayScreen implements Screen {
         playerY = y;
         downSpikes = new ArrayList<DownSpike>();
         //first level spikes
-        downSpikes.add(new DownSpike(this, 3170 / platformerGame.PPM, 31903 / platformerGame.PPM, 310));
-        downSpikes.add(new DownSpike(this, 3234 / platformerGame.PPM, 31903 / platformerGame.PPM, 310));
-        downSpikes.add(new DownSpike(this, 3298 / platformerGame.PPM, 31903 / platformerGame.PPM, 310));
+        downSpikes.add(new DownSpike(this, 3618 / platformerGame.PPM, 31903 / platformerGame.PPM, 310));
+        downSpikes.add(new DownSpike(this, 3682 / platformerGame.PPM, 31903 / platformerGame.PPM, 310));
+        downSpikes.add(new DownSpike(this, 3746 / platformerGame.PPM, 31903 / platformerGame.PPM, 310));
+        downSpikes.add(new DownSpike(this, 3807 / platformerGame.PPM, 31903 / platformerGame.PPM, 310));
 
         leftSpikes = new ArrayList<LeftSpike>();
-        leftSpikes.add(new LeftSpike(this, 3805 / platformerGame.PPM, 30240 / platformerGame.PPM, 310));
+        leftSpikes.add(new LeftSpike(this, 3805 / platformerGame.PPM, 30240 / platformerGame.PPM, 301));
 
         ballSpikes = new ArrayList<BallSpike>();
         ballSpikes.add(new BallSpike(this, 3000 / platformerGame.PPM, 31903 / platformerGame.PPM, 310));
@@ -122,12 +123,14 @@ public class PlayScreen implements Screen {
     }
 
     public void update(float dt) {
-//        System.out.println(player.getY());
         if(player.getY()>310){
             gamecam.position.y = (32000 - (port.getWorldHeight() / 2)) / platformerGame.PPM - port.getWorldHeight()/2;
         }
         if(player.getY()<310 && player.getY()>301 && !(player.getIsDead())){
             gamecam.position.y = (32000 - (port.getWorldHeight() / 2)) / platformerGame.PPM - port.getWorldHeight()/2 -(port.getWorldHeight()-(64/platformerGame.PPM));
+        }
+        if(player.getY()<301 && player.getY()>292 && !(player.getIsDead())){
+            gamecam.position.y = (32000 - (port.getWorldHeight() / 2)) / platformerGame.PPM - port.getWorldHeight()/2 -(2*(port.getWorldHeight()-(64/platformerGame.PPM)));
         }
         handleInput(dt);
         player.update(dt);

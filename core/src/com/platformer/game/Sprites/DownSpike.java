@@ -42,8 +42,6 @@ public class DownSpike extends MoveSpike {
         }else if(!destroyed){
             setPosition(b2body.getPosition().x-getWidth()/2,b2body.getPosition().y-getHeight()/2);
             if(getX()+getWidth()/2 >= Player.getPlayerX() &&  getX()-getWidth()/2 <= Player.getPlayerX() && Player.getPlayerY()>=bounds){
-                System.out.println(Player.getPlayerX());
-                System.out.println(Player.getPlayerY());
                 b2body.setLinearVelocity(velocity);
             }
         }
