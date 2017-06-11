@@ -122,19 +122,18 @@ public class PlayScreen implements Screen {
     }
 
     public void update(float dt) {
-        if(player.getY()<300){
-            gamecam.position.y = (32000 - (port.getWorldHeight() / 2)) / platformerGame.PPM - port.getWorldHeight();
-            System.out.println("we in");
+//        System.out.println(player.getY());
+        if(player.getY()>310){
+            gamecam.position.y = (32000 - (port.getWorldHeight() / 2)) / platformerGame.PPM - port.getWorldHeight()/2;
         }
-//        System.out.println(player.body.getPosition().x);
-//        System.out.println(player.body.getPosition().y);
-//        System.out.println(player.getPlayerY());
+        if(player.getY()<310 && player.getY()>301 && !(player.getIsDead())){
+            gamecam.position.y = (32000 - (port.getWorldHeight() / 2)) / platformerGame.PPM - port.getWorldHeight()/2 -(port.getWorldHeight()-(64/platformerGame.PPM));
+        }
         handleInput(dt);
         player.update(dt);
         updateSpikes(dt);
         world.step(1 / 60f, 6, 2);
         gamecam.position.x = player.body.getPosition().x;
-//        gamecam.position.y = player.body.getPosition().y;
         gamecam.update();
         renderer.setView(gamecam);
     }
@@ -143,7 +142,7 @@ public class PlayScreen implements Screen {
         //Key Press
         if (Gdx.input.isKeyJustPressed(Input.Keys.UP) /*&& (player.body.getLinearVelocity().y == 0 || player.jump > 0)*/) {
             player.body.applyLinearImpulse(new Vector2(0, 5f), player.body.getWorldCenter(), true);
-//            player.jump = 0;
+            player.jump = 0;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.body.getLinearVelocity().x <= 4)
             player.body.applyLinearImpulse(new Vector2(0.2f, 0), player.body.getWorldCenter(), true);
