@@ -11,7 +11,7 @@ import com.platformer.game.Screens.PlayScreen;
 public class platformerGame extends Game {
 
     public static SpriteBatch batch;
-    public static final int gameWidth = 1280;
+    public static final int gameWidth = 1800;
     public static final int gameHeight = 960;
     public static final float PPM = 100;
 

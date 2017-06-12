@@ -27,10 +27,8 @@ public class Controller {
         viewport = new FitViewport(platformerGame.gameWidth, platformerGame.gameHeight, cam);
         stage = new Stage(viewport, platformerGame.batch);
         Gdx.input.setInputProcessor(stage);
-
         Table table = new Table();
         table.left().bottom();
-
         Image left = new Image(new Texture("control/left.png"));
         left.setSize(100, 100);
         left.addListener(new InputListener() {
@@ -85,10 +83,7 @@ public class Controller {
         table.add().pad(0, 400, 0, 400);
         table.add(up).size(up.getWidth(), up.getHeight());
         table.pad(30, 30, 30, 30);
-
-
         stage.addActor(table);
-
     }
 
     public void draw() {

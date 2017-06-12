@@ -149,10 +149,11 @@ public class Player extends Sprite {
 
         fdef.filter.categoryBits = platformerGame.PLAYER_BIT;
         fdef.filter.maskBits = platformerGame.GROUND_BIT |
-//                platformerGame.SPIKE_BIT |
+                platformerGame.SPIKE_BIT |
                 platformerGame.DISAPPERING_BIT |
                 platformerGame.COIN_BIT |
                 platformerGame.MOVESPIKE_BIT |
+                platformerGame.BALL_BIT |
                 platformerGame.SAVE_BIT;
         fdef.shape = shape;
         fixture = body.createFixture(fdef);
