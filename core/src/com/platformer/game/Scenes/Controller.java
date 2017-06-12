@@ -78,9 +78,9 @@ public class Controller {
         });
 
         table.add(left).size(left.getWidth(), left.getHeight());
-        table.add().pad(30, 30, 30, 30);
+        table.add().pad(30, 50, 30, 50);
         table.add(right).size(right.getWidth(), right.getHeight());
-        table.add().pad(0, 400, 0, 400);
+        table.add().pad(0, 650, 0, 650);
         table.add(up).size(up.getWidth(), up.getHeight());
         table.pad(30, 30, 30, 30);
         stage.addActor(table);
