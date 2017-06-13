@@ -38,12 +38,12 @@ public class B2WorldCreator {
         }
         for (MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            new Coin(screen, rect);
+            screen.addCoins(new Coin(screen, rect));
         }
 
         for (MapObject object : map.getLayers().get(7).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            new Save(screen, rect);
+            screen.addSaves(new Save(screen, rect));
         }
 
         new Spikes(world, map);

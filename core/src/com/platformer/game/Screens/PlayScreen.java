@@ -17,10 +17,12 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.platformer.game.Scenes.Controller;
 import com.platformer.game.Scenes.Hud;
 import com.platformer.game.Sprites.BallSpike;
+import com.platformer.game.Sprites.Coin;
 import com.platformer.game.Sprites.DownSpike;
 import com.platformer.game.Sprites.LeftSpike;
 import com.platformer.game.Sprites.MoveSpike;
 import com.platformer.game.Sprites.Player;
+import com.platformer.game.Sprites.Save;
 import com.platformer.game.Tools.B2WorldCreator;
 import com.platformer.game.Tools.WorldContactListener;
 import com.platformer.game.platformerGame;
@@ -52,6 +54,11 @@ public class PlayScreen implements Screen {
     private Controller controller;
     private float playerX;
     private float playerY;
+    private float saveFrameTime;
+    private ArrayList<Save> saves;
+    private float coinFrameTime;
+    private ArrayList<Coin> coins;
+
 
 
     public PlayScreen(platformerGame game, float x, float y) {
@@ -72,10 +79,17 @@ public class PlayScreen implements Screen {
         //box2d
         b2dr = new Box2DDebugRenderer();
         world = new World(new Vector2(0, -10), true);
-        new B2WorldCreator(this);
         player = new Player(this, x, y);
         playerX = x;
         playerY = y;
+        coins = new ArrayList<Coin>();
+        coinFrameTime = 0;
+        saves = new ArrayList<Save>();
+        saveFrameTime = 0;
+        new B2WorldCreator(this);
+
+
+
         downSpikes = new ArrayList<DownSpike>();
         //first level spikes
         downSpikes.add(new DownSpike(this, 3618 / platformerGame.PPM, 31903 / platformerGame.PPM, 310));
@@ -91,6 +105,12 @@ public class PlayScreen implements Screen {
 
         world.setContactListener(new WorldContactListener(player));
         controller = new Controller();
+    }
+
+    public void addCoins(Coin c) { coins.add(c); }
+
+    public void addSaves(Save s) {
+        saves.add(s);
     }
 
     public void setPlayerX(float x) {
@@ -143,7 +163,7 @@ public class PlayScreen implements Screen {
 
     public void handleInput(float dt) {
         //Key Press
-        if (Gdx.input.isKeyJustPressed(Input.Keys.UP) /*&& (player.body.getLinearVelocity().y == 0 || player.jump > 0)*/) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.UP) && (player.body.getLinearVelocity().y == 0 || player.jump > 0)) {
             player.body.applyLinearImpulse(new Vector2(0, 5f), player.body.getWorldCenter(), true);
             player.jump = 0;
         }
@@ -166,6 +186,20 @@ public class PlayScreen implements Screen {
     @Override
     public void render(float delta) {
         update(delta);
+        saveFrameTime += delta;
+        coinFrameTime += delta;
+        if(saveFrameTime > .5) {
+            saveFrameTime = 0;
+            for (Save s : saves)
+                if(!s.getTouched())
+                    s.changeTile();
+        }
+        if(coinFrameTime > .15) {
+            coinFrameTime = 0;
+            for (Coin c : coins)
+                if(!c.getTouched())
+                    c.changeTile();
+        }
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         renderer.render();

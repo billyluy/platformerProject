@@ -1,8 +1,8 @@
 package com.platformer.game.Sprites;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.math.Rectangle;
-import com.platformer.game.Screens.GameOverScreen;
 import com.platformer.game.Screens.PlayScreen;
 import com.platformer.game.platformerGame;
 
@@ -13,14 +13,33 @@ import com.platformer.game.platformerGame;
 public class Save extends InteractiveTiles {
 
     private PlayScreen ps;
-
+    private static TiledMapTileSet tileSet;
+    private final int[] saveFrames;
+    private boolean touched;
 
     public Save(PlayScreen screen, Rectangle bounds) {
         super(screen, bounds);
         ps = screen;
         fixture.setUserData(this);
         fixture.setSensor(true);
+        tileSet = map.getTileSets().getTileSet("tileset");
+        saveFrames = new int[4];
+        for(int i = 0; i < 4; i ++) {
+            saveFrames[i] = 33 + (i * 2);
+            if(i == 3)
+                saveFrames[i] = saveFrames[i - 1] - 2;
+
+        }
+        touched = false;
         setCategoryFilter(platformerGame.SAVE_BIT);
+    }
+
+    public void changeTile() {
+        getCell().setTile(tileSet.getTile(saveFrames[(int) (Math.random() * 4)]));
+    }
+
+    public boolean getTouched() {
+        return touched;
     }
 
     @Override
@@ -29,5 +48,6 @@ public class Save extends InteractiveTiles {
         ps.setPlayerX(ps.getPlayer().getX());
         ps.setPlayerY(ps.getPlayer().getY());
         getCell().setTile(null);
+        touched = true;
     }
 }

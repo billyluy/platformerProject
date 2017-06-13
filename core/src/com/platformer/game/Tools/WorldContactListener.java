@@ -1,5 +1,6 @@
 package com.platformer.game.Tools;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -29,7 +30,7 @@ public class WorldContactListener implements ContactListener {
         int cDef = fixA.getFilterData().categoryBits | fixB.getFilterData().categoryBits;
         if (fixA.getUserData() != null && fixA.getUserData().equals("spike") && fixB.getUserData().equals("player")) {
             player.setDead(true);
-            System.out.println("HIT SPIKE");
+            Gdx.app.log("Touch", "Spike");
         }
         if (fixA.getUserData().equals("player") || fixB.getUserData().equals("player")) {
             Fixture player = fixA.getUserData().equals("player") ? fixA : fixB;
