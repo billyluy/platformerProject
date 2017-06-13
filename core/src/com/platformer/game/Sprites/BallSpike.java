@@ -23,7 +23,6 @@ public class BallSpike extends MoveSpike {
 
     public BallSpike(PlayScreen screen, float x, float y, float bound) {
         super(screen, x, y, bound);
-//        Image image = new Image(new Texture("sprites cancer\\spike down.png"));
         this.destroyed=false;
         this.destroyMe=false;
         setBounds(getX(),getY(),64/ platformerGame.PPM,64/platformerGame.PPM);
