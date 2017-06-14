@@ -12,6 +12,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.platformer.game.Scenes.Controller;
@@ -23,6 +24,7 @@ import com.platformer.game.Sprites.DownSpike;
 import com.platformer.game.Sprites.LeftSpike;
 import com.platformer.game.Sprites.Player;
 import com.platformer.game.Sprites.Save;
+import com.platformer.game.Sprites.UpSpike;
 import com.platformer.game.Tools.B2WorldCreator;
 import com.platformer.game.Tools.WorldContactListener;
 import com.platformer.game.platformerGame;
@@ -48,6 +50,7 @@ public class PlayScreen implements Screen {
     private Box2DDebugRenderer b2dr;
     private Player player;
     private ArrayList<DownSpike> downSpikes;
+    private ArrayList<UpSpike> upSpikes;
     private ArrayList<LeftSpike> leftSpikes;
     private ArrayList<BallSpike> ballSpikes;
     private TextureAtlas atlas;
@@ -97,9 +100,16 @@ public class PlayScreen implements Screen {
         downSpikes.add(new DownSpike(this, 3746 / platformerGame.PPM, 31903 / platformerGame.PPM, 310));
         downSpikes.add(new DownSpike(this, 3807 / platformerGame.PPM, 31903 / platformerGame.PPM, 310));
 
+        upSpikes = new ArrayList<UpSpike>();
+        upSpikes.add(new UpSpike(this, 2016 / platformerGame.PPM, 29344 / platformerGame.PPM, 310));
+        upSpikes.add(new UpSpike(this, 2080 / platformerGame.PPM, 29344 / platformerGame.PPM, 310));
+        upSpikes.add(new UpSpike(this, 2144 / platformerGame.PPM, 29344 / platformerGame.PPM, 310));
+        upSpikes.add(new UpSpike(this, 2208 / platformerGame.PPM, 29344 / platformerGame.PPM, 310));
+        upSpikes.add(new UpSpike(this, 2272 / platformerGame.PPM, 29344 / platformerGame.PPM, 310));
+        upSpikes.add(new UpSpike(this, 2336 / platformerGame.PPM, 29344 / platformerGame.PPM, 310));
+
         leftSpikes = new ArrayList<LeftSpike>();
         leftSpikes.add(new LeftSpike(this, 3805 / platformerGame.PPM, 30240 / platformerGame.PPM, 301));
-        leftSpikes.add(new LeftSpike(this, 1888 / platformerGame.PPM, 29915 / platformerGame.PPM, 292));
 
         ballSpikes = new ArrayList<BallSpike>();
         ballSpikes.add(new BallSpike(this, 3000 / platformerGame.PPM, 31903 / platformerGame.PPM, 310,0,-8));
@@ -245,6 +255,9 @@ public class PlayScreen implements Screen {
             if(!b.getDestroyed()){
                 b.draw(game.batch);
             }
+        for(UpSpike u : upSpikes)
+            if(!u.getDestroyed())
+                u.draw(game.batch);
     }
 
     public void updateSpikes(float dt) {
@@ -254,6 +267,8 @@ public class PlayScreen implements Screen {
             l.update(dt);
         for (BallSpike b : ballSpikes)
             b.update(dt);
+        for(UpSpike u : upSpikes)
+            u.update(dt);
     }
 
     @Override
