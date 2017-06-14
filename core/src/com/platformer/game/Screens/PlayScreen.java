@@ -101,7 +101,11 @@ public class PlayScreen implements Screen {
         leftSpikes.add(new LeftSpike(this, 3805 / platformerGame.PPM, 30240 / platformerGame.PPM, 301));
 
         ballSpikes = new ArrayList<BallSpike>();
-        ballSpikes.add(new BallSpike(this, 3000 / platformerGame.PPM, 31903 / platformerGame.PPM, 310));
+        ballSpikes.add(new BallSpike(this, 3000 / platformerGame.PPM, 31903 / platformerGame.PPM, 310,0,-8));
+        ballSpikes.add(new BallSpike(this, 3780 / platformerGame.PPM, 28440 / platformerGame.PPM, 283,-8,0));
+        ballSpikes.add(new BallSpike(this, 1380 / platformerGame.PPM, 28414 / platformerGame.PPM, 283,0,-7));
+        ballSpikes.add(new BallSpike(this, 1107 / platformerGame.PPM, 28414 / platformerGame.PPM, 283,0,-7));
+        ballSpikes.add(new BallSpike(this, 551 / platformerGame.PPM, 28830 / platformerGame.PPM, 283,-7,0));
 
         world.setContactListener(new WorldContactListener(player));
         controller = new Controller();

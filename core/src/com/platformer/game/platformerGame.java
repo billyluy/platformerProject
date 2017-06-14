@@ -33,8 +33,8 @@ public class platformerGame extends Game {
     public void create() {
 //        initialX = 128 / platformerGame.PPM;
 //        initialY = 31164 / platformerGame.PPM;
-        initialX = 800 / platformerGame.PPM;
-        initialY = 30000 / platformerGame.PPM;
+        initialX = 3500 / platformerGame.PPM;
+        initialY = 28414 / platformerGame.PPM;
         batch = new SpriteBatch();
         setScreen(new PlayScreen(this, initialX, initialY));
     }

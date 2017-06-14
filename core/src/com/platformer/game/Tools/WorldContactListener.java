@@ -59,9 +59,9 @@ public class WorldContactListener implements ContactListener {
                 break;
             case platformerGame.BALL_BIT | platformerGame.GROUND_BIT:
                 if (fixA.getFilterData().categoryBits == platformerGame.BALL_BIT)
-                    ((BallSpike) fixA.getUserData()).changeVelocity(false, true);
+                    ((BallSpike) fixA.getUserData()).changeVelocity(true, true);
                 else
-                    ((BallSpike) fixB.getUserData()).changeVelocity(false, true);
+                    ((BallSpike) fixB.getUserData()).changeVelocity(true, true);
                 break;
             case platformerGame.BALL_BIT | platformerGame.PLAYER_BIT:
                 if (fixA.getFilterData().categoryBits == platformerGame.PLAYER_BIT)

@@ -21,14 +21,14 @@ public class BallSpike extends MoveSpike {
     private Sprite spikes;
     private float bounds;
 
-    public BallSpike(PlayScreen screen, float x, float y, float bound) {
+    public BallSpike(PlayScreen screen, float x, float y, float bound, float xVelo, float yVelo) {
         super(screen, x, y, bound);
         this.destroyed=false;
         this.destroyMe=false;
         setBounds(getX(),getY(),64/ platformerGame.PPM,64/platformerGame.PPM);
         spikes = new Sprite(new TextureAtlas("spikes.pack").findRegion("spike down"));
         this.bounds = bound;
-        velocity = new Vector2(0,-8);
+        velocity = new Vector2(xVelo, yVelo);
     }
 
     public void update(float dt){
@@ -58,7 +58,9 @@ public class BallSpike extends MoveSpike {
         shape.setRadius(30/platformerGame.PPM);
 
         fdef.filter.categoryBits = platformerGame.BALL_BIT;
-        fdef.filter.maskBits = platformerGame.GROUND_BIT | platformerGame.PLAYER_BIT;
+        fdef.filter.maskBits = platformerGame.GROUND_BIT
+                | platformerGame.PLAYER_BIT
+        ;
 
         fdef.shape = shape;
         fixture = b2body.createFixture(fdef);
