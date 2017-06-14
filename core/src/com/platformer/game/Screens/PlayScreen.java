@@ -90,8 +90,6 @@ public class PlayScreen implements Screen {
         saveFrameTime = 0;
         new B2WorldCreator(this);
 
-
-
         downSpikes = new ArrayList<DownSpike>();
         //first level spikes
         downSpikes.add(new DownSpike(this, 3618 / platformerGame.PPM, 31903 / platformerGame.PPM, 310));
@@ -156,6 +154,9 @@ public class PlayScreen implements Screen {
         if(player.getY()<301 && player.getY()>292 && !(player.getIsDead())){
             gamecam.position.y = (32000 - (port.getWorldHeight() / 2)) / platformerGame.PPM - port.getWorldHeight()/2 -(2*(port.getWorldHeight()-(64/platformerGame.PPM)));
         }
+        if(player.getY()<292 && player.getY()>283 && !(player.getIsDead())){
+            gamecam.position.y = (32000 - (port.getWorldHeight() / 2)) / platformerGame.PPM - port.getWorldHeight()/2 -(3*(port.getWorldHeight()-(64/platformerGame.PPM)));
+        }
         handleInput(dt);
         player.update(dt);
         updateSpikes(dt);
@@ -189,8 +190,8 @@ public class PlayScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        System.out.println(player.getX() * 100);
-        System.out.println(player.getY() * 100);
+//        System.out.println(player.getX() * 100);
+//        System.out.println(player.getY() * 100);
         update(delta);
         for(DisappearingTile d : disappearingTiles) {
             d.upodateVelocity();
