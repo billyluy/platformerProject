@@ -99,7 +99,7 @@ public class PlayScreen implements Screen {
 
         leftSpikes = new ArrayList<LeftSpike>();
         leftSpikes.add(new LeftSpike(this, 3805 / platformerGame.PPM, 30240 / platformerGame.PPM, 301));
-        leftSpikes.add(new LeftSpike(this, 1888 / platformerGame.PPM, 29915 / platformerGame.PPM, 301));
+        leftSpikes.add(new LeftSpike(this, 1888 / platformerGame.PPM, 29915 / platformerGame.PPM, 292));
 
         ballSpikes = new ArrayList<BallSpike>();
         ballSpikes.add(new BallSpike(this, 3000 / platformerGame.PPM, 31903 / platformerGame.PPM, 310,0,-8));
