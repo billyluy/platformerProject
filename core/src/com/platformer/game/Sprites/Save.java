@@ -45,6 +45,8 @@ public class Save extends InteractiveTiles {
     @Override
     public void onTouch() {
         Gdx.app.log("Touch", "Save Tile");
+        System.out.println(ps.getPlayer().getX() * 100);
+        System.out.println(ps.getPlayer().getY() * 100);
         setCategoryFilter(platformerGame.DESTROY_BIT);
         ps.setPlayerX(ps.getPlayer().getX());
         ps.setPlayerY(ps.getPlayer().getY());

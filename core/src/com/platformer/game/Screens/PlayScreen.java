@@ -99,6 +99,7 @@ public class PlayScreen implements Screen {
 
         leftSpikes = new ArrayList<LeftSpike>();
         leftSpikes.add(new LeftSpike(this, 3805 / platformerGame.PPM, 30240 / platformerGame.PPM, 301));
+        leftSpikes.add(new LeftSpike(this, 1888 / platformerGame.PPM, 29915 / platformerGame.PPM, 301));
 
         ballSpikes = new ArrayList<BallSpike>();
         ballSpikes.add(new BallSpike(this, 3000 / platformerGame.PPM, 31903 / platformerGame.PPM, 310,0,-8));
@@ -194,8 +195,6 @@ public class PlayScreen implements Screen {
 
     @Override
     public void render(float delta) {
-//        System.out.println(player.getX() * 100);
-//        System.out.println(player.getY() * 100);
         update(delta);
         for(DisappearingTile d : disappearingTiles) {
             d.upodateVelocity();
