@@ -38,7 +38,7 @@ public class Coin extends InteractiveTiles {
         setCategoryFilter(platformerGame.COIN_BIT);
         touched = false;
         for(int i = 0; i < 5; i ++) {
-            saveFrames[i] = 39 + (i * 2);
+            saveFrames[i] = 45 + (i * 2);
         }
     }
 

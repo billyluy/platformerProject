@@ -18,16 +18,28 @@ import com.platformer.game.platformerGame;
  */
 
 public class DisappearingTile extends InteractiveTiles {
+    private float playerYVelocity;
+    private float playerXVelocity;
+    private PlayScreen ps;
+
     public DisappearingTile(PlayScreen screen, Rectangle bounds) {
         super(screen, bounds);
+        ps = screen;
         fixture.setUserData(this);
         setCategoryFilter(platformerGame.DISAPPERING_BIT);
+        playerYVelocity = 0;
+        playerXVelocity = 0;
     }
 
+    public void upodateVelocity() {
+        playerYVelocity = ps.getPlayer().body.getLinearVelocity().y;
+        playerXVelocity = ps.getPlayer().body.getLinearVelocity().x;
+    }
     @Override
     public void onTouch() {
         Gdx.app.log("Touch", "Disappear");
         setCategoryFilter(platformerGame.DESTROY_BIT);
         getCell().setTile(null);
+        ps.getPlayer().body.setLinearVelocity(playerXVelocity, playerYVelocity);
     }
 }

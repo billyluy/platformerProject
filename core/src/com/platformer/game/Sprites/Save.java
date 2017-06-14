@@ -23,8 +23,8 @@ public class Save extends InteractiveTiles {
         fixture.setUserData(this);
         fixture.setSensor(true);
         tileSet = map.getTileSets().getTileSet("tileset");
-        saveFrames = new int[4];
-        for(int i = 0; i < 4; i ++) {
+        saveFrames = new int[6];
+        for(int i = 0; i < 6; i ++) {
             saveFrames[i] = 33 + (i * 2);
             if(i == 3)
                 saveFrames[i] = saveFrames[i - 1] - 2;
@@ -35,7 +35,7 @@ public class Save extends InteractiveTiles {
     }
 
     public void changeTile() {
-        getCell().setTile(tileSet.getTile(saveFrames[(int) (Math.random() * 4)]));
+        getCell().setTile(tileSet.getTile(saveFrames[(int) (Math.random() * 6)]));
     }
 
     public boolean getTouched() {
@@ -45,6 +45,7 @@ public class Save extends InteractiveTiles {
     @Override
     public void onTouch() {
         Gdx.app.log("Touch", "Save Tile");
+        setCategoryFilter(platformerGame.DESTROY_BIT);
         ps.setPlayerX(ps.getPlayer().getX());
         ps.setPlayerY(ps.getPlayer().getY());
         getCell().setTile(null);

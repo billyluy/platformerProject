@@ -18,9 +18,9 @@ import com.platformer.game.Scenes.Controller;
 import com.platformer.game.Scenes.Hud;
 import com.platformer.game.Sprites.BallSpike;
 import com.platformer.game.Sprites.Coin;
+import com.platformer.game.Sprites.DisappearingTile;
 import com.platformer.game.Sprites.DownSpike;
 import com.platformer.game.Sprites.LeftSpike;
-import com.platformer.game.Sprites.MoveSpike;
 import com.platformer.game.Sprites.Player;
 import com.platformer.game.Sprites.Save;
 import com.platformer.game.Tools.B2WorldCreator;
@@ -58,6 +58,7 @@ public class PlayScreen implements Screen {
     private ArrayList<Save> saves;
     private float coinFrameTime;
     private ArrayList<Coin> coins;
+    private ArrayList<DisappearingTile> disappearingTiles;
 
 
 
@@ -77,11 +78,12 @@ public class PlayScreen implements Screen {
         //map starts at bottom left corner
         gamecam.position.set(((port.getWorldWidth() / 2) / platformerGame.PPM) + port.getWorldWidth() / 2, (32000 - (port.getWorldHeight() / 2)) / platformerGame.PPM - port.getWorldHeight() / 2, 0);
         //box2d
-        b2dr = new Box2DDebugRenderer();
+//        b2dr = new Box2DDebugRenderer();
         world = new World(new Vector2(0, -10), true);
         player = new Player(this, x, y);
         playerX = x;
         playerY = y;
+        disappearingTiles = new ArrayList<DisappearingTile>();
         coins = new ArrayList<Coin>();
         coinFrameTime = 0;
         saves = new ArrayList<Save>();
@@ -106,6 +108,8 @@ public class PlayScreen implements Screen {
         world.setContactListener(new WorldContactListener(player));
         controller = new Controller();
     }
+
+    public void addDissapear(DisappearingTile d) { disappearingTiles.add(d); }
 
     public void addCoins(Coin c) { coins.add(c); }
 
@@ -185,7 +189,12 @@ public class PlayScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        System.out.println(player.getX() * 100);
+        System.out.println(player.getY() * 100);
         update(delta);
+        for(DisappearingTile d : disappearingTiles) {
+            d.upodateVelocity();
+        }
         saveFrameTime += delta;
         coinFrameTime += delta;
         if(saveFrameTime > .5) {
@@ -203,7 +212,7 @@ public class PlayScreen implements Screen {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         renderer.render();
-        b2dr.render(world, gamecam.combined);
+//        b2dr.render(world, gamecam.combined);
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();
         player.draw(game.batch);
@@ -277,7 +286,7 @@ public class PlayScreen implements Screen {
         map.dispose();
         renderer.dispose();
         world.dispose();
-        b2dr.dispose();
+//        b2dr.dispose();
         hud.dispose();
     }
 }
