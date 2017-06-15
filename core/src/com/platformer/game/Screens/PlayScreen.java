@@ -67,6 +67,7 @@ public class PlayScreen implements Screen {
     private ArrayList<DisappearingTile> disappearingTiles;
     private Music music;
     private Sound sound;
+    private Sound sound2;
     public AssetManager manager;
 
 
@@ -74,6 +75,7 @@ public class PlayScreen implements Screen {
         manager = new AssetManager();
         manager.load("audio/bg.mp3", Music.class);
         manager.load("audio/jump.mp3", Sound.class);
+        manager.load("audio/death.mp3", Sound.class);
         manager.finishLoading();
         atlas = new TextureAtlas("player.pack");
         this.game = game;
@@ -132,6 +134,7 @@ public class PlayScreen implements Screen {
 
         music = manager.get("audio/bg.mp3", Music.class);
         sound = manager.get("audio/jump.mp3", Sound.class);
+        sound2 = manager.get("audio/death.mp3", Sound.class);
         music.setLooping(true);
         music.setVolume(1);
         music.play();
@@ -175,6 +178,9 @@ public class PlayScreen implements Screen {
     }
 
     public void update(float dt) {
+        if(player.getIsDead()){
+            sound2.play();
+        }
         if(player.getY()>310){
             gamecam.position.y = ((32010 - (port.getWorldHeight() / 2)) / platformerGame.PPM - port.getWorldHeight()/2);
         }

@@ -1,5 +1,8 @@
 package com.platformer.game.Sprites;
 
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -77,10 +80,6 @@ public class Player extends Sprite {
     }
 
     public void update(float dt) {
-        if(godMode){
-            Filter filter = new Filter();
-            fixture.setFilterData(filter);
-        }
         playerX = getX();
         playerY = getY();
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
