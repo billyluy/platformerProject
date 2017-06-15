@@ -30,7 +30,7 @@ public class Controller {
         Table table = new Table();
         table.left().bottom();
         Image left = new Image(new Texture("control/left.png"));
-        left.setSize(100, 100);
+        left.setSize(150, 150);
         left.addListener(new InputListener() {
 
             @Override
@@ -46,7 +46,7 @@ public class Controller {
         });
 
         Image right = new Image(new Texture("control/right.png"));
-        right.setSize(100, 100);
+        right.setSize(150, 150);
         right.addListener(new InputListener() {
 
             @Override
@@ -62,7 +62,7 @@ public class Controller {
         });
 
         Image up = new Image(new Texture("control/up.png"));
-        up.setSize(100, 100);
+        up.setSize(150, 150);
         up.addListener(new InputListener() {
 
             @Override
@@ -80,7 +80,7 @@ public class Controller {
         table.add(left).size(left.getWidth(), left.getHeight());
         table.add().pad(30, 50, 30, 50);
         table.add(right).size(right.getWidth(), right.getHeight());
-        table.add().pad(0, 650, 0, 650);
+        table.add().pad(0, 570, 0, 570);
         table.add(up).size(up.getWidth(), up.getHeight());
         table.pad(30, 30, 30, 30);
         stage.addActor(table);
