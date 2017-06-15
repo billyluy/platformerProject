@@ -73,7 +73,7 @@ public class PlayScreen implements Screen {
     public PlayScreen(platformerGame game, float x, float y) {
         manager = new AssetManager();
         manager.load("audio/bg.mp3", Music.class);
-        manager.load("audio/jump.wav", Sound.class);
+        manager.load("audio/jump.mp3", Sound.class);
         manager.finishLoading();
         atlas = new TextureAtlas("player.pack");
         this.game = game;
@@ -131,7 +131,7 @@ public class PlayScreen implements Screen {
         controller = new Controller();
 
         music = manager.get("audio/bg.mp3", Music.class);
-        sound = manager.get("audio/jump.wav", Sound.class);
+        sound = manager.get("audio/jump.mp3", Sound.class);
         music.setLooping(true);
         music.setVolume(1);
         music.play();
@@ -200,6 +200,7 @@ public class PlayScreen implements Screen {
         //Key Press
         if (Gdx.input.isKeyJustPressed(Input.Keys.UP) && (player.body.getLinearVelocity().y == 0 || player.jump > 0)) {
             sound.play();
+            manager.finishLoading();
             player.body.applyLinearImpulse(new Vector2(0, 5f), player.body.getWorldCenter(), true);
             player.jump = 0;
         }
@@ -215,6 +216,7 @@ public class PlayScreen implements Screen {
             player.body.applyLinearImpulse(new Vector2(-0.2f, 0), player.body.getWorldCenter(), true);
         if (controller.isUpPress() && (player.body.getLinearVelocity().y == 0 || player.jump > 0)) {
             sound.play();
+            manager.finishLoading();
             player.body.applyLinearImpulse(new Vector2(0, 5f), player.body.getWorldCenter(), true);
             player.jump = 0;
         }

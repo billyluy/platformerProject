@@ -28,7 +28,6 @@ public class platformerGame extends Game {
     public static final short MOVESPIKE_BIT = 64;
     public static final short BALL_BIT = 128;
     public static final short SAVE_BIT = 256;
-
     public float initialX;
     public float initialY;
 
