@@ -223,7 +223,7 @@ public class PlayScreen implements Screen {
                 if(!c.getTouched())
                     c.changeTile();
         }
-        Gdx.gl.glClearColor(1, 1, 1, 1);
+        Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         renderer.render();
 //        b2dr.render(world, gamecam.combined);
