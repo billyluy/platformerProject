@@ -178,9 +178,9 @@ public class PlayScreen implements Screen {
     }
 
     public void update(float dt) {
-        if(player.getIsDead()){
-            sound2.play();
-        }
+//        if(player.getIsDead()){
+//            sound2.play();
+//        }
         if(player.getY()>310){
             gamecam.position.y = ((32010 - (port.getWorldHeight() / 2)) / platformerGame.PPM - port.getWorldHeight()/2);
         }
