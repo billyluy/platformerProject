@@ -133,6 +133,7 @@ public class PlayScreen implements Screen {
         music = manager.get("audio/bg.mp3", Music.class);
         sound = manager.get("audio/jump.wav", Sound.class);
         music.setLooping(true);
+        music.setVolume(1);
         music.play();
     }
 
