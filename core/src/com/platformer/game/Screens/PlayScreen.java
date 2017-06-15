@@ -176,16 +176,16 @@ public class PlayScreen implements Screen {
 
     public void update(float dt) {
         if(player.getY()>310){
-            gamecam.position.y = (32000 - (port.getWorldHeight() / 2)) / platformerGame.PPM - port.getWorldHeight()/2;
+            gamecam.position.y = ((32010 - (port.getWorldHeight() / 2)) / platformerGame.PPM - port.getWorldHeight()/2);
         }
         if(player.getY()<310 && player.getY()>301 && !(player.getIsDead())){
-            gamecam.position.y = (32000 - (port.getWorldHeight() / 2)) / platformerGame.PPM - port.getWorldHeight()/2 -(port.getWorldHeight()-(64/platformerGame.PPM));
+            gamecam.position.y = (32010 - (port.getWorldHeight() / 2)) / platformerGame.PPM - port.getWorldHeight()/2 -(port.getWorldHeight()-(64/platformerGame.PPM));
         }
         if(player.getY()<301 && player.getY()>292 && !(player.getIsDead())){
-            gamecam.position.y = (32000 - (port.getWorldHeight() / 2)) / platformerGame.PPM - port.getWorldHeight()/2 -(2*(port.getWorldHeight()-(64/platformerGame.PPM)));
+            gamecam.position.y = (32010 - (port.getWorldHeight() / 2)) / platformerGame.PPM - port.getWorldHeight()/2 -(2*(port.getWorldHeight()-(64/platformerGame.PPM)));
         }
         if(player.getY()<292 && player.getY()>283 && !(player.getIsDead())){
-            gamecam.position.y = (32000 - (port.getWorldHeight() / 2)) / platformerGame.PPM - port.getWorldHeight()/2 -(3*(port.getWorldHeight()-(64/platformerGame.PPM)));
+            gamecam.position.y = (32010 - (port.getWorldHeight() / 2)) / platformerGame.PPM - port.getWorldHeight()/2 -(3*(port.getWorldHeight()-(64/platformerGame.PPM)));
         }
         handleInput(dt);
         player.update(dt);
