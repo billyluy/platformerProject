@@ -32,14 +32,8 @@ public class platformerGame extends Game {
     public float initialX;
     public float initialY;
 
-//    public AssetManager manager;
-
     @Override
     public void create() {
-//        manager = new AssetManager();
-//        manager.load("audio/bg.mp3", Music.class);
-//        manager.load("audio/jump.mp3", Sound.class);
-//        manager.finishLoading();
         initialX = 128 / platformerGame.PPM;
         initialY = 31164 / platformerGame.PPM;
 //        initialX = 3500 / platformerGame.PPM;
