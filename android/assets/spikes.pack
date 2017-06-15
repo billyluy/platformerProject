@@ -5,28 +5,35 @@ filter: Nearest,Nearest
 repeat: none
 spike down
   rotate: false
-  xy: 1, 1
+  xy: 0, 0
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 spike left
   rotate: false
-  xy: 67, 1
+  xy: 64, 0
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 spike right
   rotate: false
-  xy: 133, 1
+  xy: 128, 0
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 spike up
   rotate: false
-  xy: 199, 1
+  xy: 192, 0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+spikeball
+  rotate: false
+  xy: 256, 0
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
