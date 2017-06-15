@@ -1,8 +1,12 @@
 package com.platformer.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -25,12 +29,17 @@ public class platformerGame extends Game {
     public static final short BALL_BIT = 128;
     public static final short SAVE_BIT = 256;
 
-
     public float initialX;
     public float initialY;
 
+//    public AssetManager manager;
+
     @Override
     public void create() {
+//        manager = new AssetManager();
+//        manager.load("audio/bg.mp3", Music.class);
+//        manager.load("audio/jump.mp3", Sound.class);
+//        manager.finishLoading();
         initialX = 128 / platformerGame.PPM;
         initialY = 31164 / platformerGame.PPM;
 //        initialX = 3500 / platformerGame.PPM;

@@ -3,6 +3,9 @@ package com.platformer.game.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -62,10 +65,16 @@ public class PlayScreen implements Screen {
     private float coinFrameTime;
     private ArrayList<Coin> coins;
     private ArrayList<DisappearingTile> disappearingTiles;
-
+    private Music music;
+    private Sound sound;
+    public AssetManager manager;
 
 
     public PlayScreen(platformerGame game, float x, float y) {
+        manager = new AssetManager();
+        manager.load("audio/bg.mp3", Music.class);
+        manager.load("audio/jump.wav", Sound.class);
+        manager.finishLoading();
         atlas = new TextureAtlas("player.pack");
         this.game = game;
         //cam to follow user through map
@@ -120,6 +129,11 @@ public class PlayScreen implements Screen {
 
         world.setContactListener(new WorldContactListener(player));
         controller = new Controller();
+
+        music = manager.get("audio/bg.mp3", Music.class);
+        sound = manager.get("audio/jump.wav", Sound.class);
+        music.setLooping(true);
+        music.play();
     }
 
     public void addDissapear(DisappearingTile d) { disappearingTiles.add(d); }
@@ -184,6 +198,7 @@ public class PlayScreen implements Screen {
     public void handleInput(float dt) {
         //Key Press
         if (Gdx.input.isKeyJustPressed(Input.Keys.UP) && (player.body.getLinearVelocity().y == 0 || player.jump > 0)) {
+            sound.play();
             player.body.applyLinearImpulse(new Vector2(0, 5f), player.body.getWorldCenter(), true);
             player.jump = 0;
         }
@@ -198,6 +213,7 @@ public class PlayScreen implements Screen {
         if (controller.isLeftPressed() && player.body.getLinearVelocity().x >= -4)
             player.body.applyLinearImpulse(new Vector2(-0.2f, 0), player.body.getWorldCenter(), true);
         if (controller.isUpPress() && (player.body.getLinearVelocity().y == 0 || player.jump > 0)) {
+            sound.play();
             player.body.applyLinearImpulse(new Vector2(0, 5f), player.body.getWorldCenter(), true);
             player.jump = 0;
         }
