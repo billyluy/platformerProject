@@ -3,7 +3,6 @@
 (2017) Billy Luy and Jia Ming Ma
 
 > An android game about a trapped mushroom trying to get out. 
-</br>
 > Black holes are check points, coins allow you to double jump, the goal is to get to the end before rage quitting!
 </br>
 </br>
