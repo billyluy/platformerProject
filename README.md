@@ -8,6 +8,7 @@
 Click to watch the video!
 </br>
 ![GitHub Logo](https://i.gyazo.com/7d6ffebe5ff59e041952b593bb6f8a65.png)
+</br>
 [![Watch the video](https://i.gyazo.com/7d6ffebe5ff59e041952b593bb6f8a65.png)](https://streamable.com/utfxk)
 [GitHub](http://github.com)
 </br>
