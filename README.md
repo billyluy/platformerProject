@@ -5,7 +5,6 @@
 > An android game about a trapped mushroom trying to get out. 
 > Black holes are check points, coins allow you to double jump, the goal is to get to the end before rage quitting!
 </br>
-</br>
 Click to watch the video!
 </br>
 [![Watch the video](https://i.gyazo.com/7d6ffebe5ff59e041952b593bb6f8a65.png)](https://streamable.com/utfxk)
